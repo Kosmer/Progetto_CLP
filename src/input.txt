@@ -1,0 +1,4 @@
+int bool a;
+int a;
+itn a;
+!!$%&/$%&/(();
