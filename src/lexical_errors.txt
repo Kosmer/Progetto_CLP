@@ -4,3 +4,5 @@ Errore, simbolo "&" non riconosciuto.
 Errore, simbolo "$" non riconosciuto.
 Errore, simbolo "%" non riconosciuto.
 Errore, simbolo "&" non riconosciuto.
+Errore, simbolo "%" non riconosciuto.
+Errore, simbolo "&" non riconosciuto.

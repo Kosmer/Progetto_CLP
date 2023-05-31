@@ -2,3 +2,5 @@
 /lexical_errors.txt
 /parser/
 /semanticAnalysis/
+/ast/
+/mainPackage/
