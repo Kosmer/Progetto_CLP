@@ -15,7 +15,7 @@ public class Type implements Node {
 	}
 
 	public ArrayList<SemanticError> checkSemantics(SymbolTable ST, int _nesting) {
-		// It is never invoked
+		// It is never invoked popipopi
 		return null;
 	}
 	@Override
