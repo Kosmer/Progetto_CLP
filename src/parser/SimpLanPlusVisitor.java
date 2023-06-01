@@ -52,4 +52,30 @@ public interface SimpLanPlusVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitExp(SimpLanPlusParser.ExpContext ctx);
+	
+	
+	/**
+	 * Visit a parse tree produced by the {@code intVal}
+	 * labeled alternative in {@link SimpLanParser#value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntVal(@NotNull SimpLanPlusParser.IntValContext ctx);
+	
+	/**
+	 * Visit a parse tree produced by the {@code varExp}
+	 * labeled alternative in {@link SimpLanParser#value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVarExp(@NotNull SimpLanPlusParser.VarExpContext ctx);
+	
+	/**
+	 * Visit a parse tree produced by the {@code funExp}
+	 * labeled alternative in {@link SimpLanParser#value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunExp(@NotNull SimpLanPlusParser.FunExpContext ctx);
+	
 }

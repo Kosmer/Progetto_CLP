@@ -23,8 +23,10 @@ stm    : ID '=' exp ';'
        | 'if' '(' exp ')' '{' (stm)+ '}' ('else' '{' (stm)+ '}')?
 	   ;
            
-exp    :  INTEGER | 'true' | 'false'
-       | ID 
+exp    :  INTEGER							#intVal
+       | 'true' 
+       | 'false'
+       | ID 								#varExp
        | '!' exp
        | exp ('*' | '/') exp
        | exp ('+' | '-') exp 
@@ -32,7 +34,7 @@ exp    :  INTEGER | 'true' | 'false'
        | exp ('&&' | '||') exp 
        | 'if' '(' exp ')' '{' (stm)* exp '}' 'else' '{' (stm)* exp '}' 
        | '(' exp ')'
-       | ID '(' (exp (',' exp)* )? ')'
+       | ID '(' (exp (',' exp)* )? ')'		#funExp
        ;
  
 /*------------------------------------------------------------------

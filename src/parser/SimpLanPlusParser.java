@@ -5,6 +5,10 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
+
+import parser.SimpLanParser.ExpContext;
+import parser.SimpLanParser.ValueContext;
+
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -646,10 +650,47 @@ public class SimpLanPlusParser extends Parser {
 		public ExpContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
+		public ExpContext() {}
 		@Override public int getRuleIndex() { return RULE_exp; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	
+	public static class VarExpContext extends ExpContext {
+		public VarExpContext(ExpContext ctx) { copyFrom(ctx); }
+		public TerminalNode ID() { return getToken(SimpLanPlusParser.ID, 0); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitVarExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	
+	public static class FunExpContext extends ExpContext {
+		public List<ExpContext> exp() {
+			return getRuleContexts(ExpContext.class);
+		}
+		public TerminalNode ID() { return getToken(SimpLanPlusParser.ID, 0); }
+		public ExpContext exp(int i) {
+			return getRuleContext(ExpContext.class,i);
+		}
+		public FunExpContext(ExpContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitFunExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	
+	public static class IntValContext extends ExpContext {
+		public TerminalNode INTEGER() { return getToken(SimpLanPlusParser.INTEGER, 0); }
+		public IntValContext(ExpContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitIntVal(this);
 			else return visitor.visitChildren(this);
 		}
 	}
