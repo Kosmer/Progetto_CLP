@@ -4,7 +4,7 @@ prog   : exp        				#singleExp
        | (dec)+ (stm)* (exp)?       #decstmExp
        ;
 
-dec    : type ID ';'    			#idInit                              
+dec    : type ID ';'    			#idDec                              
        | type ID '(' ( param ( ',' param)* )? ')' '{' body '}'		#funDec
        ;
          
@@ -37,7 +37,7 @@ exp    :  INTEGER						#intExp
        | left=exp (greater='>' | lesser='<' | greater_equals='>=' | lesser_equals='<=' | equals='==') right=exp 			#compareExp
        | left=exp (and='&&' | or='||') right=exp 							#andorExp
        | 'if' '(' cond=exp ')' '{' thenBranch=blockseqstmexp '}' 'else' '{' elseBranch=blockseqstmexp '}' 		#ifExp
-       | '(' exp ')'					#parExp
+       | '(' exp ')'					#baseExp
        | ID '(' (exp (',' exp)* )? ')'		#funExp
        ;
        

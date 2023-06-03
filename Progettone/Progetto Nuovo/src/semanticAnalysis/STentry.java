@@ -43,10 +43,11 @@ public class STentry {
 	}
 	
 	public boolean isInitialized() {
-		if(initialized==false)
-			return false;
-		else
-			return true ;
+		return initialized;
+	}
+	
+	public void setInitialized() {
+		initialized = true;
 	}
 	
 	

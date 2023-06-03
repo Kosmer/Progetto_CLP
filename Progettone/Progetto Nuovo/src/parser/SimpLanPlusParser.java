@@ -254,15 +254,15 @@ public class SimpLanPlusParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class IdInitContext extends DecContext {
+	public static class IdDecContext extends DecContext {
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
 		public TerminalNode ID() { return getToken(SimpLanPlusParser.ID, 0); }
-		public IdInitContext(DecContext ctx) { copyFrom(ctx); }
+		public IdDecContext(DecContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitIdInit(this);
+			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitIdDec(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -276,7 +276,7 @@ public class SimpLanPlusParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 			case 1:
-				_localctx = new IdInitContext(_localctx);
+				_localctx = new IdDecContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(35);
@@ -881,14 +881,14 @@ public class SimpLanPlusParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class ParExpContext extends ExpContext {
+	public static class BaseExpContext extends ExpContext {
 		public ExpContext exp() {
 			return getRuleContext(ExpContext.class,0);
 		}
-		public ParExpContext(ExpContext ctx) { copyFrom(ctx); }
+		public BaseExpContext(ExpContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitParExp(this);
+			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitBaseExp(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1072,7 +1072,7 @@ public class SimpLanPlusParser extends Parser {
 				break;
 			case 7:
 				{
-				_localctx = new ParExpContext(_localctx);
+				_localctx = new BaseExpContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(146);

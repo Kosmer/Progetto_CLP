@@ -17,6 +17,18 @@ public class SimpLanPlusBaseListener implements SimpLanPlusListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBaseExp(@NotNull SimpLanPlusParser.BaseExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBaseExp(@NotNull SimpLanPlusParser.BaseExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMuldivExp(@NotNull SimpLanPlusParser.MuldivExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -113,6 +125,18 @@ public class SimpLanPlusBaseListener implements SimpLanPlusListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterIdDec(@NotNull SimpLanPlusParser.IdDecContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdDec(@NotNull SimpLanPlusParser.IdDecContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterFunDec(@NotNull SimpLanPlusParser.FunDecContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -156,18 +180,6 @@ public class SimpLanPlusBaseListener implements SimpLanPlusListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParam(@NotNull SimpLanPlusParser.ParamContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterParExp(@NotNull SimpLanPlusParser.ParExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitParExp(@NotNull SimpLanPlusParser.ParExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -221,13 +233,13 @@ public class SimpLanPlusBaseListener implements SimpLanPlusListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIdInit(@NotNull SimpLanPlusParser.IdInitContext ctx) { }
+	@Override public void enterBlockseqstmexp(@NotNull SimpLanPlusParser.BlockseqstmexpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIdInit(@NotNull SimpLanPlusParser.IdInitContext ctx) { }
+	@Override public void exitBlockseqstmexp(@NotNull SimpLanPlusParser.BlockseqstmexpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -264,6 +276,18 @@ public class SimpLanPlusBaseListener implements SimpLanPlusListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSingleExp(@NotNull SimpLanPlusParser.SingleExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBlockseqstm(@NotNull SimpLanPlusParser.BlockseqstmContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBlockseqstm(@NotNull SimpLanPlusParser.BlockseqstmContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

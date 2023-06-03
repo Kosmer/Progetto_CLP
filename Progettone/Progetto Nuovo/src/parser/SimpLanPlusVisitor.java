@@ -30,7 +30,7 @@ public interface SimpLanPlusVisitor<T> extends ParseTreeVisitor<T> {
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIdInit(SimpLanPlusParser.IdInitContext ctx);
+	T visitIdDec(SimpLanPlusParser.IdDecContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code funDec}
 	 * labeled alternative in {@link SimpLanPlusParser#dec}.
@@ -130,7 +130,7 @@ public interface SimpLanPlusVisitor<T> extends ParseTreeVisitor<T> {
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParExp(SimpLanPlusParser.ParExpContext ctx);
+	T visitBaseExp(SimpLanPlusParser.BaseExpContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code andorExp}
 	 * labeled alternative in {@link SimpLanPlusParser#exp}.

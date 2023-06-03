@@ -31,7 +31,7 @@ public class SimpLanPlusBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIdInit(SimpLanPlusParser.IdInitContext ctx) { return visitChildren(ctx); }
+	@Override public T visitIdDec(SimpLanPlusParser.IdDecContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -136,7 +136,7 @@ public class SimpLanPlusBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitParExp(SimpLanPlusParser.ParExpContext ctx) { return visitChildren(ctx); }
+	@Override public T visitBaseExp(SimpLanPlusParser.BaseExpContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

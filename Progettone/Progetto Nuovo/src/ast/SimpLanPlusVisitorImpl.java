@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 
 import parser.SimpLanPlusParser.AddsubExpContext;
 import parser.SimpLanPlusParser.AndorExpContext;
+import parser.SimpLanPlusParser.BaseExpContext;
 import parser.SimpLanPlusParser.BlockseqstmContext;
 import parser.SimpLanPlusParser.BlockseqstmexpContext;
 import parser.SimpLanPlusParser.BodyContext;
@@ -19,29 +20,31 @@ import parser.SimpLanPlusParser.FalseExpContext;
 import parser.SimpLanPlusParser.FunDecContext;
 import parser.SimpLanPlusParser.FunExpContext;
 import parser.SimpLanPlusParser.FunStmContext;
-import parser.SimpLanPlusParser.IdInitContext;
+import parser.SimpLanPlusParser.IdDecContext;
 import parser.SimpLanPlusParser.IfExpContext;
 import parser.SimpLanPlusParser.IfStmContext;
 import parser.SimpLanPlusParser.IntExpContext;
 import parser.SimpLanPlusParser.MuldivExpContext;
 import parser.SimpLanPlusParser.NotExpContext;
-import parser.SimpLanPlusParser.ParExpContext;
 import parser.SimpLanPlusParser.ParamContext;
 import parser.SimpLanPlusParser.SingleExpContext;
+import parser.SimpLanPlusParser.StmContext;
 import parser.SimpLanPlusParser.TrueExpContext;
 import parser.SimpLanPlusParser.TypeContext;
 import parser.SimpLanPlusParser.VarExpContext;
 import parser.SimpLanPlusParser.VarStmContext;
 import parser.SimpLanPlusVisitor;
+import parser.SimpLanPlusParser.DecContext;
 
 public class SimpLanPlusVisitorImpl implements SimpLanPlusVisitor<Node> {
 
 	@Override
 	public Node visit(ParseTree arg0) {
-		// TODO Auto-generated method stub
+		//TODO
 		return null;
 	}
-
+	
+	
 	@Override
 	public Node visitChildren(RuleNode arg0) {
 		// TODO Auto-generated method stub
@@ -62,8 +65,7 @@ public class SimpLanPlusVisitorImpl implements SimpLanPlusVisitor<Node> {
 
 	@Override
 	public Node visitSingleExp(SingleExpContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ProgNode(visit(ctx.exp()));
 	}
 
 	@Override
@@ -73,7 +75,7 @@ public class SimpLanPlusVisitorImpl implements SimpLanPlusVisitor<Node> {
 	}
 
 	@Override
-	public Node visitIdInit(IdInitContext ctx) {
+	public Node visitIdDec(IdDecContext ctx) {
 		//visit the type
 		Node typeNode = visit(ctx.type());
 						
@@ -83,8 +85,44 @@ public class SimpLanPlusVisitorImpl implements SimpLanPlusVisitor<Node> {
 
 	@Override
 	public Node visitFunDec(FunDecContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		//initialize @res with the visits to the type and its ID
+		
+		
+		//add argument declarations
+		//we are getting a shortcut here by constructing directly the ParNode
+		//this could be done differently by visiting instead the VardecContext
+		ArrayList<ParNode> _param = new ArrayList<ParNode>() ;
+				
+		for (ParamContext vc : ctx.param())
+			_param.add( new ParNode(vc.ID().getText(), (Type) visit( vc.type() )) );
+		
+		//add body
+		//create a list for the nested declarations
+		ArrayList<Node> innerDec = new ArrayList<Node>();
+		ArrayList<Node> innerStm = new ArrayList<Node>();
+		Node innerExp = null;
+		
+		//check whether there are actually nested decs
+		if(ctx.body() != null){
+			if(ctx.body().dec()!=null) {
+				for(DecContext dc : ctx.body().dec())
+					innerDec.add(visit(dc));
+			}
+			if(ctx.body().stm()!=null) {
+				for(StmContext sc : ctx.body().stm())
+					innerStm.add(visit(sc));
+			}
+			if(ctx.body().exp()!=null) {
+				innerExp = visit(ctx.body().exp()); 
+			}
+			//if there are visit each dec and add it to the @innerDec list
+			
+			
+				
+		}
+		
+		
+		return new FunNode(ctx.ID().getText(), (Type) visit(ctx.type()), _param, innerDec, innerStm, innerExp);
 	}
 
 	@Override
@@ -110,8 +148,11 @@ public class SimpLanPlusVisitorImpl implements SimpLanPlusVisitor<Node> {
 
 	@Override
 	public Node visitVarStm(VarStmContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		//visit the exp
+		Node expNode = visit(ctx.exp());
+		
+		//build the varNode
+		return new VarStmNode(ctx.ID().getText(), expNode);
 	}
 
 	@Override
@@ -167,7 +208,7 @@ public class SimpLanPlusVisitorImpl implements SimpLanPlusVisitor<Node> {
 	}
 
 	@Override
-	public Node visitParExp(ParExpContext ctx) {
+	public Node visitBaseExp(BaseExpContext ctx) {
 		return visit (ctx.exp());
 	}
 
