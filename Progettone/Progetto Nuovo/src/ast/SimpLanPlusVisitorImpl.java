@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.RuleNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import parser.SimpLanPlusBaseVisitor;
 import parser.SimpLanPlusParser.AddsubExpContext;
 import parser.SimpLanPlusParser.AndorExpContext;
 import parser.SimpLanPlusParser.BaseExpContext;
@@ -36,13 +37,7 @@ import parser.SimpLanPlusParser.VarStmContext;
 import parser.SimpLanPlusVisitor;
 import parser.SimpLanPlusParser.DecContext;
 
-public class SimpLanPlusVisitorImpl implements SimpLanPlusVisitor<Node> {
-
-	@Override
-	public Node visit(ParseTree arg0) {
-		//TODO
-		return null;
-	}
+public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 	
 	
 	@Override
