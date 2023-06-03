@@ -22,7 +22,7 @@ public class NotNode implements Node {
 		  if (ctx.typeCheck() instanceof BoolType) 
 			  return new BoolType() ;
 		  else {
-			  System.out.println("Type Error: Non integers in addition") ;
+			  System.out.println("Type Error: Non integers in NOT") ;
 			  return new ErrorType() ;
 		  }
 	}  
