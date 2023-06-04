@@ -38,6 +38,7 @@ import parser.SimpLanPlusVisitor;
 import parser.SimpLanPlusParser.DecContext;
 
 public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
+
 	
 	
 	@Override
@@ -60,19 +61,35 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 
 	@Override
 	public Node visitSingleExp(SingleExpContext ctx) {
-		return new ProgNode(visit(ctx.exp()));
+		return new Prog1Node(visit(ctx.exp()));
 	}
 
 	@Override
 	public Node visitDecstmExp(DecstmExpContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ArrayList<Node> decList = new ArrayList<Node>();
+		ArrayList<Node> stmList = new ArrayList<Node>();
+		Node expNode = null;
+		
+		
+		for (DecContext dc : ctx.dec())
+			decList.add(visit(dc));
+		
+		for (StmContext sc : ctx.stm())
+			stmList.add(visit(sc));
+			
+		if(ctx.exp() != null)
+			expNode = visit(ctx.exp());
+			
+		
+		return new Prog2Node(decList, stmList, expNode);
 	}
 
 	@Override
 	public Node visitIdDec(IdDecContext ctx) {
 		//visit the type
 		Node typeNode = visit(ctx.type());
+		
 						
 		//build the varNode
 		return new DecNode(ctx.ID().getText(), typeNode);

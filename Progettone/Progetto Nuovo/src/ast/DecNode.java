@@ -18,6 +18,9 @@ public class DecNode implements Node {
    		ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
   		nesting = _nesting ;
         
+  		if(type instanceof VoidType) {
+  			errors.add(new SemanticError("Not possible to declare var " + id + " to type void"));
+		}
         if (ST.top_lookup(id) == true) 
         	errors.add(new SemanticError("Var id " + id + " already declared"));
         else ST.insert(id, (Type) type, nesting,"") ;

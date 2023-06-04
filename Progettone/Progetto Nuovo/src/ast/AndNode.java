@@ -27,7 +27,7 @@ public class AndNode implements Node {
 		  if ((left.typeCheck() instanceof BoolType) && (right.typeCheck() instanceof BoolType) ) 
 			  return new BoolType() ;
 		  else {
-			  System.out.println("Type Error: Non integers in AND") ;
+			  System.out.println("Type Error: Non integers in addition") ;
 			  return new ErrorType() ;
 		  }
 	}  

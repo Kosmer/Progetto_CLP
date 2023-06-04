@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import semanticAnalysis.SemanticError ;
 import semanticAnalysis.SymbolTable ;
 
-public class ProgNode implements Node {
+public class Prog1Node implements Node {
 	private Node exp;
   
-	public ProgNode (Node _exp) {
+	public Prog1Node (Node _exp) {
 		exp = _exp ;
 	}
   
@@ -25,7 +25,7 @@ public class ProgNode implements Node {
 	}  
   
 	public String toPrint(String s) {
-		return "Prog\n" + exp.toPrint("  ") ;
+		return "Prog1\n" + exp.toPrint("  ") ;
 	}
 
 }  
