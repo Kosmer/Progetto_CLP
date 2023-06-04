@@ -39,25 +39,6 @@ import parser.SimpLanPlusParser.DecContext;
 
 public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 
-	
-	
-	@Override
-	public Node visitChildren(RuleNode arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Node visitErrorNode(ErrorNode arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Node visitTerminal(TerminalNode arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Node visitSingleExp(SingleExpContext ctx) {
@@ -137,11 +118,6 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 		return new FunNode(ctx.ID().getText(), (Type) visit(ctx.type()), _param, innerDec, innerStm, innerExp);
 	}
 
-	@Override
-	public Node visitParam(ParamContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Node visitBody(BodyContext ctx) {
@@ -169,14 +145,36 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 
 	@Override
 	public Node visitFunStm(FunStmContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		//this corresponds to a function invocation
+		//declare the result
+		Node res;
+		
+		//get the invocation arguments
+		ArrayList<Node> args = new ArrayList<Node>();
+		
+		for (ExpContext exp : ctx.exp())
+			args.add(visit(exp));
+		
+		// this is ad-hoc for this project...
+		if(ctx.ID().getText().equals("print"))
+			res = new PrintNode(args.get(0));
+		
+		else
+			//instantiate the invocation
+			res = new CallNode(ctx.ID().getText(), args);
+		
+		return res;
 	}
 
 	@Override
 	public Node visitIfStm(IfStmContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		Node condStm = visit (ctx.cond);
+		
+		Node thenStm = visit (ctx.thenBranch);
+		
+		Node elseStm = visit (ctx.elseBranch);
+		
+		return new IfStmNode(condStm, thenStm, elseStm);
 	}
 
 	@Override
@@ -239,7 +237,7 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 		
 		Node elseExp = visit (ctx.elseBranch);
 		
-		return new IfNode(condExp, thenExp, elseExp);
+		return new IfExpNode(condExp, thenExp, elseExp);
 	}
 
 	@Override
@@ -280,14 +278,26 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 
 	@Override
 	public Node visitBlockseqstm(BlockseqstmContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Node> stmList = new ArrayList<Node>();
+		for (StmContext sc : ctx.stm())
+			stmList.add(visit(sc));
+		
+		return new SeqstmNode(stmList);
 	}
+	
 
 	@Override
 	public Node visitBlockseqstmexp(BlockseqstmexpContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Node> stmList = new ArrayList<Node>();
+		Node expNode = null;
+		
+		for (StmContext sc : ctx.stm())
+			stmList.add(visit(sc));
+			
+		expNode = visit(ctx.exp());
+			
+		
+		return new SeqstmexpNode(stmList, expNode);
 	}
 
 }

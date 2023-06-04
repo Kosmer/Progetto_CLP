@@ -24,13 +24,16 @@ public class PlusNode implements Node {
 	}
 	  
 	public Type typeCheck() {
-		  if ((left.typeCheck() instanceof IntType) && (right.typeCheck() instanceof IntType) ) 
+		  if ((left.typeCheck() instanceof IntType) && (right.typeCheck() instanceof IntType) ) {
 			  return new IntType() ;
+		  }
+			  
 		  else {
 			  System.out.println("Type Error: Non integers in addition") ;
 			  return new ErrorType() ;
 		  }
 	}  
+	
 	  
   
 	public String codeGeneration() {

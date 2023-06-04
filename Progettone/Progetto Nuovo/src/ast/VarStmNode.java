@@ -21,13 +21,17 @@ public class VarStmNode implements Node {
    		ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
   		nesting = _nesting ;
         
+  		
   		STentry T = ST.lookup(id);
   		
         if (T == null) 
         	errors.add(new SemanticError("Var id " + id + " not declared"));
-        else T.setInitialized();
+        else {
+        	T.setInitialized();
+        	type = T.gettype();
+        	System.out.println("PORCODDIO "+ type );
+        }
         
-        type = T.gettype();
         return errors ;
 	}
   

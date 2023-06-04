@@ -7,26 +7,20 @@ import semanticAnalysis.STentry;
 import semanticAnalysis.SemanticError ;
 import semanticAnalysis.SymbolTable ;
 
-public class Prog2Node implements Node {
-	private ArrayList<Node> declist;
+public class SeqstmexpNode implements Node {
 	private ArrayList<Node> stmlist;
 	private Node exp;
 	private int nesting ;
   
-	public Prog2Node (ArrayList<Node> _declist, ArrayList<Node> _stmlist, Node _exp) {
-		declist = _declist ;
+	public SeqstmexpNode (ArrayList<Node> _stmlist, Node _exp) {
 		stmlist = _stmlist;
 		exp = _exp ;
 	}
   
 	public ArrayList<SemanticError> checkSemantics(SymbolTable ST, int _nesting) {		
 		ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
-		HashMap<String,STentry> HM = new HashMap<String,STentry>();
-		ST.add(HM);
 		nesting = _nesting ;
 		
-		for (Node dec : declist)
-			errors.addAll(dec.checkSemantics(ST, nesting));
 		for (Node stm : stmlist)
 			errors.addAll(stm.checkSemantics(ST, nesting));
 		if (exp!=null)
@@ -36,15 +30,12 @@ public class Prog2Node implements Node {
 	}
 
 	public Type typeCheck() {
-		if (declist!=null) 
-			for (Node dec:declist)
-				dec.typeCheck();
 		if (stmlist!=null) 
 			for (Node stm:stmlist)
 				stm.typeCheck();
-		if (exp!=null)
-			exp.typeCheck();
-		return new VoidType();
+		exp.typeCheck();
+
+		return null;
 	}  
   
 	public String codeGeneration() {
@@ -57,25 +48,17 @@ public class Prog2Node implements Node {
 	}  
   
 	public String toPrint(String s) {
-		String declstr= "";
 		String stmlstr= "";
 		String explstr="";
-		if (declist!=null) {
-			for (Node dec:declist)
-			    declstr+=dec.toPrint(s+" ");
-			declstr+="\n";
-		}
-		  
+		
 		if (stmlist!=null) {
 			for (Node stm:stmlist)
 			    stmlstr+=stm.toPrint(s+" ");
 			stmlstr+="\n";
 		}
 			  
-		if (exp!=null)
-				explstr+=exp.toPrint(s+" ");
-		return s+"Prog2:" + "\n"
-	   	   +declstr 
+		explstr+=exp.toPrint(s+" ");
+		return s+"" + "\n  "
 	   	   +stmlstr 
 	   	   +explstr;
 	}

@@ -21,6 +21,7 @@ public class CallNode implements Node {
 		nesting = _nesting ;
 		STentry tmp = ST.lookup(id) ;
 		if (tmp != null) {
+			
 				entry = tmp ;
 				for (Node par : parameters)
 					 errors.addAll(par.checkSemantics(ST, nesting));

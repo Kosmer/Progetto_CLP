@@ -6,12 +6,12 @@ import evaluator.SimpLanlib;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
 
-public class IfNode implements Node {
+public class IfStmNode implements Node {
 	private Node guard ;
 	private Node thenbranch ;
 	private Node elsebranch ;
   
-	public IfNode (Node _guard, Node _thenbranch, Node _elsebranch) {
+	public IfStmNode (Node _guard, Node _thenbranch, Node _elsebranch) {
     	guard = _guard ;
     	thenbranch = _thenbranch ;
     	elsebranch = _elsebranch ;
@@ -30,14 +30,11 @@ public class IfNode implements Node {
   
 	public Type typeCheck() {
 		if (guard.typeCheck() instanceof BoolType) {
-			Type thenexp = thenbranch.typeCheck() ;
-			Type elseexp = elsebranch.typeCheck() ;
-			if (thenexp.getClass().equals(elseexp.getClass()))
-        		return thenexp;
-			else {
-        		System.out.println("Type Error: incompatible types in then and else branches");
-        		return new ErrorType() ;	
-			}
+			
+			thenbranch.typeCheck() ;
+			elsebranch.typeCheck() ;
+			return null;
+			
 		} else {
 			System.out.println("Type Error: non boolean condition in if");
 			return new ErrorType() ;
@@ -45,6 +42,9 @@ public class IfNode implements Node {
 	}
   
   	public String codeGeneration() {
+  		/*
+  		 * DA RIFARE
+  		 * 
   		String lthen = SimpLanlib.freshLabel(); 
   		String lend = SimpLanlib.freshLabel();
   		return guard.codeGeneration() +
@@ -55,6 +55,8 @@ public class IfNode implements Node {
 			 lthen + ":\n" +
 			 thenbranch.codeGeneration() +
 	         lend + ":\n" ; 
+	    */
+  		return "";
   	}
 
   	public String toPrint(String s) {

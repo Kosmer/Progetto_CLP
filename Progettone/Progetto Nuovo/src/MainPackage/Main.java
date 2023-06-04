@@ -61,6 +61,7 @@ public class Main {
 		}
 
 		
+		
 		if (lexerErrors.size() > 0){
 			//se ci sono stati errori di sintassi
 			System.out.println("Ci sono: " + lexerErrors.size() + " errori lessicali.\n");
@@ -91,7 +92,7 @@ public class Main {
 				if (type instanceof ErrorType)
 					System.out.println("Type checking is WRONG!");
 				else 
-					System.out.println(type.toPrint("Type checking ok!"));
+					System.out.println("Type checking ok!");
 
 				
 			}

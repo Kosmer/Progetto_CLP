@@ -75,11 +75,18 @@ public class FunNode implements Node {
 			for (Node stm:stmlist)
 				stm.typeCheck();
 		if(exp!=null) {
-			if ( (exp.typeCheck()).getClass().equals(returntype.getClass())) 
-    			return null ;
+			Type exp_type = exp.typeCheck();
+			if ( (exp.typeCheck().getClass()).equals(returntype.getClass())) {
+    			if(exp_type instanceof BoolType) {
+    				return new BoolType();
+    			}
+    			if(exp_type instanceof IntType) {
+    				return new IntType();
+    			}
+			}
 		}
 		if(returntype instanceof VoidType && exp==null) {
-			return null;
+			return new VoidType();
 		}
 		else {
 			System.out.println("Wrong return type for function "+id);
@@ -143,21 +150,34 @@ public class FunNode implements Node {
   
   
   public String toPrint(String s) {
-		String parlstr="";
+	  
+		String parlstr="   ";
 		for (Node par:parlist){
 		  parlstr += par.toPrint(s);
 		}
+		if (parlstr=="   ")
+			parlstr="";
 		String declstr= "";
 		String stmlstr= "";
 		String explstr="";
-		if (declist!=null) 
-		  for (Node dec:declist)
-		    declstr+=dec.toPrint(s+" ");
-		if (stmlist!=null) 
-			  for (Node stm:stmlist)
+		if (declist!=null) {
+			//declstr+="   ";
+			for (Node dec:declist)
+			    declstr+=dec.toPrint("  "+s+"");
+		}
+		  
+			
+		if (stmlist!=null) {
+			stmlstr+="   ";
+			for (Node stm:stmlist)
 			    stmlstr+=stm.toPrint(s+" ");
-		if (exp!=null)
+		//	stmlstr+="\n";
+		}
+			  
+		if (exp!=null) {
+				explstr+="   ";
 				explstr+=exp.toPrint(s+" ");
+		}
 	    return s+"Fun:" + id +"\n"
 			   +type.toPrint(s+"  ")
 			   +parlstr 
