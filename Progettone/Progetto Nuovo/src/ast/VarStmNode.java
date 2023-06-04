@@ -21,7 +21,6 @@ public class VarStmNode implements Node {
    		ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
   		nesting = _nesting ;
         
-  		
   		STentry T = ST.lookup(id);
   		
         if (T == null) 
@@ -29,8 +28,9 @@ public class VarStmNode implements Node {
         else {
         	T.setInitialized();
         	type = T.gettype();
-        	System.out.println("PORCODDIO "+ type );
         }
+        
+        errors.addAll(exp.checkSemantics(ST, nesting));
         
         return errors ;
 	}
@@ -56,6 +56,8 @@ public class VarStmNode implements Node {
 	}  
     
 	public String toPrint(String s) {
+		
+        
 		return s + "StmVar:" + id + type.toPrint(" ") + "\n" + exp.toPrint(s+"\t"); 
 	}
 

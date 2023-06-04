@@ -2,6 +2,7 @@ package ast;
 
 import java.util.ArrayList;
 
+import semanticAnalysis.STentry;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
 
@@ -16,6 +17,7 @@ public class AndNode implements Node {
   
 	public ArrayList<SemanticError> checkSemantics(SymbolTable ST, int _nesting) {
 		  ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
+		  
 		  
 		  errors.addAll(left.checkSemantics(ST, _nesting));
 		  errors.addAll(right.checkSemantics(ST, _nesting));
