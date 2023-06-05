@@ -46,7 +46,7 @@ public class MinusNode implements Node {
 	  }
 	  
 	  public String toPrint(String s) {
-		    return s+"Subt\n" + left.toPrint(s+"  ")  + right.toPrint(s+"  ") ; 
+		    return s+"Subs\n" + left.toPrint(s+"  ")  + right.toPrint(s+"  ") ; 
 	  }
 		  
   

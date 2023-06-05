@@ -26,10 +26,10 @@ public class EqualNode implements Node {
 	public Type typeCheck() {
 		  if ((left.typeCheck() instanceof IntType) && (right.typeCheck() instanceof IntType) ) 
 			  return new BoolType() ;
-		  else {
-			  System.out.println("Type Error: Non integers in addition") ;
-			  return new ErrorType() ;
-		  }
+		  if ((left.typeCheck() instanceof BoolType) && (right.typeCheck() instanceof BoolType) ) 
+			  return new BoolType() ;
+		  System.out.println("Type Error: Different types in addition") ;
+		  return new ErrorType() ;
 	}  
 	
 	public Type typeCheck(int a) {
@@ -52,7 +52,7 @@ public class EqualNode implements Node {
 	}
    
 	public String toPrint(String s) {
-	    return s+"Lesser\n" + left.toPrint(s+"  ") + right.toPrint(s+"  ") ; 
+	    return s+"Equal\n" + left.toPrint(s+"  ") + right.toPrint(s+"  ") ; 
 	}
 	  
 }  
