@@ -30,10 +30,6 @@ public class EqualNode implements Node {
 			  return new BoolType() ;
 		  System.out.println("Type Error: Different types in addition") ;
 		  return new ErrorType() ;
-	}  
-	
-	public Type typeCheck(int a) {
-		return typeCheck();
 	}
 	  
   

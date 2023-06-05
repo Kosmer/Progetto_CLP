@@ -31,10 +31,6 @@ public class SeqstmNode implements Node {
 				stm.typeCheck();
 		return null;
 	}  
-	
-	public Type typeCheck(int a) {
-		return typeCheck();
-	}
   
 	public String codeGeneration() {
 		/*

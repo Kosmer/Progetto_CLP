@@ -32,10 +32,6 @@ public class MinusNode implements Node {
 		  }	  
 	  }
 	  
-	  public Type typeCheck(int a) {
-		  return typeCheck();
-		}
-	  
 	  public String codeGeneration() {
 			return 		left.codeGeneration()
 					   + "pushr A0 \n"

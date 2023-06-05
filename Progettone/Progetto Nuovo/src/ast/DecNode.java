@@ -36,10 +36,6 @@ public class DecNode implements Node {
 		return new VoidType();
 		    
 	}
-	
-	public Type typeCheck(int a) {
-		return typeCheck();
-	}
   
 	public String codeGeneration() {
 		/*

@@ -48,10 +48,6 @@ public class VarStmNode implements Node {
 		}
 		    
 	}
-	
-	public Type typeCheck(int a) {
-		return typeCheck();
-	}
   
 	public String codeGeneration() {
 		/*

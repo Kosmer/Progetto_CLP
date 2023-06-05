@@ -32,11 +32,6 @@ public class MulNode implements Node {
 		  }	  
 	  }
 	  
-	  public Type typeCheck(int a) {
-		  return typeCheck();
-		}
-	  
-	  
 	  public String codeGeneration() {
 		  /*
 		   * DA RIFARE

@@ -37,10 +37,6 @@ public class SeqstmexpNode implements Node {
 
 		return null;
 	}  
-	
-	public Type typeCheck(int a) {
-		return typeCheck();
-	}
   
 	public String codeGeneration() {
 		/*

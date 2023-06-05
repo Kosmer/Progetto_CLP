@@ -49,10 +49,6 @@ public class Prog2Node implements Node {
 				return new ErrorType();
 		return new VoidType();
 	}  
-	
-	public Type typeCheck(int a) {
-		return typeCheck();
-	}
   
 	public String codeGeneration() {
 		/*

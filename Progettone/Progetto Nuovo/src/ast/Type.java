@@ -24,11 +24,6 @@ public class Type implements Node {
 		return null;
 	}
 	@Override
-	public Type typeCheck(int a) {
-		// It is never invoked
-		return null;
-	}
-	@Override
 	public String codeGeneration() {
 		// It is never invoked
 		return "";

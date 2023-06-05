@@ -31,10 +31,6 @@ public class OrNode implements Node {
 			  return new ErrorType() ;
 		  }
 	}  
-	
-	public Type typeCheck(int a) {
-		return typeCheck();
-	}
 	  
   
 	public String codeGeneration() {
