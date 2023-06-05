@@ -18,6 +18,14 @@ public class STentry {
 		label="";
 	}
 	
+	public STentry(Type _type, int _offset, int _nesting, String  _label, boolean init) {
+		type = _type ;
+		offset = _offset ;
+		nesting = _nesting ;
+		initialized = init;
+		label="";
+	}
+	
 	public STentry(Type _type, int _offset, int _nesting, String  _label) {
 		type = _type ;
 		offset = _offset ;
@@ -50,8 +58,28 @@ public class STentry {
 		initialized = true;
 	}
 	
+	public void setinitialized(boolean i) {
+		initialized = i;
+	}
+	
 	public boolean getInitialized() {
 		return initialized;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+
+	public void setNesting(int nesting) {
+		this.nesting = nesting;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 	

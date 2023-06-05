@@ -21,9 +21,14 @@ public class IfExpNode implements Node {
   public ArrayList<SemanticError> checkSemantics(SymbolTable ST, int _nesting) {
 	  ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
 	  
+	  SymbolTable S1 = ST.copy();
+	  SymbolTable S2 = ST.copy();
+	  
+	  System.out.println(ST.toPrint());
 	  errors.addAll(guard.checkSemantics(ST, _nesting));
-	  errors.addAll(thenbranch.checkSemantics(ST, _nesting));
-	  errors.addAll(elsebranch.checkSemantics(ST, _nesting));
+	  errors.addAll(thenbranch.checkSemantics(S1, _nesting));
+	  errors.addAll(elsebranch.checkSemantics(S2, _nesting));
+	  System.out.println(ST.toPrint());
 	  
 	  return errors;
   }

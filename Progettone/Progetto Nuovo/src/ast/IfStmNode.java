@@ -21,9 +21,18 @@ public class IfStmNode implements Node {
   public ArrayList<SemanticError> checkSemantics(SymbolTable ST, int _nesting) {
 	  ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
 	  
+	  SymbolTable S1 = new SymbolTable();
+	  S1 = ST.copy();
+	  SymbolTable S2 = new SymbolTable();
+	  S2 = ST.copy();
+	  
+
 	  errors.addAll(guard.checkSemantics(ST, _nesting));
-	  errors.addAll(thenbranch.checkSemantics(ST, _nesting));
-	  errors.addAll(elsebranch.checkSemantics(ST, _nesting));
+	  errors.addAll(thenbranch.checkSemantics(S1, _nesting));
+	  errors.addAll(elsebranch.checkSemantics(S2, _nesting));
+	  System.out.println("ST: "+ST.toPrint());
+	  System.out.println("S1: "+S1.toPrint());
+	  System.out.println("S2: "+S2.toPrint());
 	  
 	  return errors;
   }

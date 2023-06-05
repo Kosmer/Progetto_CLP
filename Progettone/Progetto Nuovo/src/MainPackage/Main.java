@@ -74,6 +74,9 @@ public class Main {
 				Files.write(Paths.get("src\\lexical_errors.txt"), toWrite.getBytes(), StandardOpenOption.APPEND);
 			}
 		} else {
+			
+			
+			
 			System.out.println("AAAAAAAAAAA");
 			//se non ci sono stati errori di sintassi procedo con l'analisi semantica
 			SymbolTable ST = new SymbolTable();

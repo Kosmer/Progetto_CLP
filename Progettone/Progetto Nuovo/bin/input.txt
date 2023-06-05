@@ -1,7 +1,2 @@
-bool x;
-bool y;
-
-x=true;
-y=false;
-
-x && y;
+int a;
+a

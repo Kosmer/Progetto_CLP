@@ -44,14 +44,19 @@ public class FunNode implements Node {
     	  			partypes.add(arg.getType());
     	  			if (ST.top_lookup(arg.getId()))
     	  					errors.add(new SemanticError("Parameter id " + arg.getId() + " already declared")) ;
-    	  			else ST.insert(arg.getId(), arg.getType(), nesting+1, "") ;
+    	  			else {
+    	  				ST.insert(arg.getId(), arg.getType(), nesting+1, "", true) ;
+    
+    	  			}
     	  		}
 
 			type = new ArrowType(partypes, returntype) ;
 			
 			ST.increaseoffset() ; // aumentiamo di 1 l'offset per far posto al return value
+			ST.insert(id, type, nesting, flabel) ;
 			for (Node dec : declist)
   				errors.addAll(dec.checkSemantics(ST, nesting+1));
+			
 			for (Node stm : stmlist)
 				errors.addAll(stm.checkSemantics(ST, nesting+1));
 			
