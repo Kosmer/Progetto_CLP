@@ -1,8 +1,10 @@
 package ast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import evaluator.SimpLanlib;
+import semanticAnalysis.STentry;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
 
@@ -21,14 +23,30 @@ public class IfExpNode implements Node {
   public ArrayList<SemanticError> checkSemantics(SymbolTable ST, int _nesting) {
 	  ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
 	  
-	  SymbolTable S1 = ST.copy();
-	  SymbolTable S2 = ST.copy();
+	  SymbolTable S1 = new SymbolTable();
+	  S1 = ST.copy();
+	  SymbolTable S2 = new SymbolTable();
+	  S2 = ST.copy();
 	  
-	  System.out.println(ST.toPrint());
+	  
 	  errors.addAll(guard.checkSemantics(ST, _nesting));
 	  errors.addAll(thenbranch.checkSemantics(S1, _nesting));
 	  errors.addAll(elsebranch.checkSemantics(S2, _nesting));
-	  System.out.println(ST.toPrint());
+	  
+	  ArrayList<HashMap<String,STentry>> t1 = S1.getSymbolTable();
+	  ArrayList<HashMap<String,STentry>> t2 = S2.getSymbolTable();
+	  
+	  for(HashMap<String, STentry> h:t1) {
+		  for(String key:h.keySet()) {
+			  STentry e = ST.lookup(key);
+			  STentry e1 = S1.lookup(key);
+			  STentry e2 = S2.lookup(key);
+			 
+			  if(e1.isInitialized() && e2.isInitialized() && !e.isInitialized()) {
+				  e.setInitialized();
+			  }
+		  }
+	  }
 	  
 	  return errors;
   }

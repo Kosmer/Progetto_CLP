@@ -84,8 +84,11 @@ public class Main {
 			
 			if(errors.size()>0){
 				System.out.println("You had: " + errors.size() + " errors:");
-				for(SemanticError e : errors)
+				for(SemanticError e : errors) {
+					System.out.println("slpc,as,s");
 					System.out.println("\t" + e);
+				}
+					
 			} else {
 				System.out.println("Visualizing AST...");
 				System.out.println(ast.toPrint(""));
@@ -94,8 +97,12 @@ public class Main {
 				Node type = (Node)ast.typeCheck(); //type-checking bottom-up 
 				if (type instanceof ErrorType)
 					System.out.println("Type checking is WRONG!");
-				else 
+				else {
 					System.out.println("Type checking ok!");
+					System.out.println("Symble Table: \n");
+					System.out.println(ST.toPrint());
+				}
+					
 
 				
 			}

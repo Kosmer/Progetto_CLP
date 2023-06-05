@@ -24,10 +24,6 @@ public class LesserNode implements Node {
 	}
 	  
 	public Type typeCheck() {
-		if ((left.typeCheck(1) instanceof IntType) && (right.typeCheck(1) instanceof IntType) ) {
-			  return new BoolType() ;
-		  }
-		  else
 		  if ((left.typeCheck() instanceof IntType) && (right.typeCheck() instanceof IntType) ) 
 			  return new BoolType() ;
 		  else {

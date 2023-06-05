@@ -67,6 +67,7 @@ public class SymbolTable {
 		    	for (String key : hashMap.keySet()) {
 		        	STentry e = hashMap.get(key);
 		        	res+="Entry "+e+":\n";
+		        	res+="\tID: "+key+"\n";
 		        	res+="\tTipo: "+e.gettype()+"\n";
 		        	res+="\tOffset: "+e.getoffset()+"\n";
 		        	res+="\tNesting: "+e.getnesting()+"\n";
@@ -152,6 +153,10 @@ public class SymbolTable {
 		symbol_table = st;
 		offset = o;
 	} 
+	
+	public ArrayList<HashMap<String,STentry>> getSymbolTable(){
+		return symbol_table;
+	}
 	
 	public void increaseoffset() {
 		int n = offset.size() - 1 ;

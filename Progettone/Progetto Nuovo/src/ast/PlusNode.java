@@ -26,10 +26,6 @@ public class PlusNode implements Node {
 	}
 	  
 	public Type typeCheck() {
-		  if ((left.typeCheck(1) instanceof IntType) && (right.typeCheck(1) instanceof IntType) ) {
-			  return new IntType() ;
-		  }
-		  else
 		  if ((left.typeCheck() instanceof IntType) && (right.typeCheck() instanceof IntType) ) {
 			  return new IntType() ;
 		  }

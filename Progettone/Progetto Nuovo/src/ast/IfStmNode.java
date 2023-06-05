@@ -1,8 +1,10 @@
 package ast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import evaluator.SimpLanlib;
+import semanticAnalysis.STentry;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
 
@@ -29,10 +31,29 @@ public class IfStmNode implements Node {
 
 	  errors.addAll(guard.checkSemantics(ST, _nesting));
 	  errors.addAll(thenbranch.checkSemantics(S1, _nesting));
-	  errors.addAll(elsebranch.checkSemantics(S2, _nesting));
-	  System.out.println("ST: "+ST.toPrint());
-	  System.out.println("S1: "+S1.toPrint());
-	  System.out.println("S2: "+S2.toPrint());
+	  if(elsebranch!=null)
+		  errors.addAll(elsebranch.checkSemantics(S2, _nesting));
+	  //System.out.println("ST: "+ST.toPrint());
+	  //System.out.println("S1: "+S1.toPrint());
+	  //System.out.println("S2: "+S2.toPrint());
+	  
+	  ArrayList<HashMap<String,STentry>> t1 = S1.getSymbolTable();
+	  ArrayList<HashMap<String,STentry>> t2 = S2.getSymbolTable();
+	  
+	  //se nei rami thene else viene inizializzata una variabile allora anche nell'ambiente finale viene inizializzata
+	  if(elsebranch!=null) {
+		  for(HashMap<String, STentry> h:t1) {
+			  for(String key:h.keySet()) {
+				  STentry e = ST.lookup(key);
+				  STentry e1 = S1.lookup(key);
+				  STentry e2 = S2.lookup(key);
+				 
+				  if(e1.isInitialized() && e2.isInitialized() && !e.isInitialized()) {
+					  e.setInitialized();
+				  }
+			  }
+		  }
+	  }
 	  
 	  return errors;
   }
@@ -41,7 +62,8 @@ public class IfStmNode implements Node {
 		if (guard.typeCheck() instanceof BoolType) {
 			
 			thenbranch.typeCheck() ;
-			elsebranch.typeCheck() ;
+			if(elsebranch!=null)
+				elsebranch.typeCheck() ;
 			return null;
 			
 		} else {
@@ -73,7 +95,10 @@ public class IfStmNode implements Node {
   	}
 
   	public String toPrint(String s) {
-	    return s+"If\n" + guard.toPrint(s+"  ") + thenbranch.toPrint(s+"  ")  + elsebranch.toPrint(s+"  ") ; 
-	}
+  		if(elsebranch!=null)
+  			return s+"If\n" + guard.toPrint(s+"  ") + thenbranch.toPrint(s+"  ")  + elsebranch.toPrint(s+"  ") ; 
+  		else
+  			return s+"If\n" + guard.toPrint(s+"  ") + thenbranch.toPrint(s+"  "); 
+  	}
 	  
 }  

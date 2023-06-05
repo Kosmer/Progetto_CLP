@@ -25,6 +25,7 @@ public class VarStmNode implements Node {
   		
         if (T == null) 
         	errors.add(new SemanticError("Var id " + id + " not declared"));
+        
         else {
         	T.setInitialized();
         	type = T.gettype();
@@ -36,7 +37,7 @@ public class VarStmNode implements Node {
 	}
   
 	public Type typeCheck () {
-		if(exp.typeCheck(1)instanceof ErrorType) {
+		if(exp.typeCheck()instanceof ErrorType) {
 			return new ErrorType() ;
 		}
 		else if (exp.typeCheck().getClass().equals(type.getClass() )) 

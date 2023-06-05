@@ -172,7 +172,9 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 		
 		Node thenStm = visit (ctx.thenBranch);
 		
-		Node elseStm = visit (ctx.elseBranch);
+		Node elseStm = null;
+		if(ctx.elseBranch!=null)
+			elseStm = visit (ctx.elseBranch);
 		
 		return new IfStmNode(condStm, thenStm, elseStm);
 	}

@@ -24,10 +24,6 @@ public class OrNode implements Node {
 	}
 	  
 	public Type typeCheck() {
-		if ((left.typeCheck(1) instanceof BoolType) && (right.typeCheck(1) instanceof BoolType) ) {
-			  return new BoolType() ;
-		  }
-		  else
 		  if ((left.typeCheck() instanceof BoolType) && (right.typeCheck() instanceof BoolType) ) 
 			  return new BoolType() ;
 		  else {
