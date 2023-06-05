@@ -19,7 +19,11 @@ public class BoolNode implements Node {
 
 	public Type typeCheck() {
 		return new BoolType();
-	}    
+	} 
+	
+	public Type typeCheck(int a) {
+		return typeCheck();
+	}
     
 	public String codeGeneration() {
 		return "storei A0 "+(val?1:0)+"\n";

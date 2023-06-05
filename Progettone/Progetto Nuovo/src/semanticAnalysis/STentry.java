@@ -50,6 +50,10 @@ public class STentry {
 		initialized = true;
 	}
 	
+	public boolean getInitialized() {
+		return initialized;
+	}
+	
 	
 
 }

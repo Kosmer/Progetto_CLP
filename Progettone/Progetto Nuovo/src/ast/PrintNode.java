@@ -20,6 +20,10 @@ public class PrintNode implements Node {
 		    return exp.typeCheck();
 	}  
 		  
+	public Type typeCheck(int a) {
+		return typeCheck();
+	}
+	
 	public String codeGeneration() {
 				return exp.codeGeneration()+"print\n";
 	}

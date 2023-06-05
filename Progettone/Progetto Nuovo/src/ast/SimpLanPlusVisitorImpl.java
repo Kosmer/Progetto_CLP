@@ -202,9 +202,11 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 		else if(ctx.greater!= null){ //it is a binary expression, you should visit left and right
 			return new GreaterNode(visit(ctx.left), visit(ctx.right));
 		}
-		else { //it is a binary expression, you should visit left and right
+		else if(ctx.lesser!=null){ //it is a binary expression, you should visit left and right
 			return new LesserNode(visit(ctx.left), visit(ctx.right));
 		}
+		else
+			return new EqualNode(visit(ctx.left), visit(ctx.right));
 	}
 
 	@Override

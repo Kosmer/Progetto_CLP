@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
 
-public class OrNode implements Node {
+public class EqualNode implements Node {
 	private Node left;
 	private Node right;
   
-	public OrNode (Node _left, Node _right) {
+	public EqualNode (Node _left, Node _right) {
 		left = _left ;
 		right = _right ;
 	}
@@ -24,11 +24,11 @@ public class OrNode implements Node {
 	}
 	  
 	public Type typeCheck() {
-		if ((left.typeCheck(1) instanceof BoolType) && (right.typeCheck(1) instanceof BoolType) ) {
+		if ((left.typeCheck(1) instanceof IntType) && (right.typeCheck(1) instanceof IntType) ) {
 			  return new BoolType() ;
 		  }
 		  else
-		  if ((left.typeCheck() instanceof BoolType) && (right.typeCheck() instanceof BoolType) ) 
+		  if ((left.typeCheck() instanceof IntType) && (right.typeCheck() instanceof IntType) ) 
 			  return new BoolType() ;
 		  else {
 			  System.out.println("Type Error: Non integers in addition") ;
@@ -42,22 +42,21 @@ public class OrNode implements Node {
 	  
   
 	public String codeGeneration() {
-		
 		/*
 		 * DA RIFARE
-		 * 
+		 *
 		return left.codeGeneration()+
 			   "pushr A0 \n" +
 			   right.codeGeneration()+
 			   "popr T1 \n" +
 			   "add A0 T1 \n" +
 			   "popr A0 \n" ;
-		*/
+		 */
 		return " ";
 	}
    
 	public String toPrint(String s) {
-	    return s+"Or\n" + left.toPrint(s+"  ") + right.toPrint(s+"  ") ; 
+	    return s+"Lesser\n" + left.toPrint(s+"  ") + right.toPrint(s+"  ") ; 
 	}
 	  
 }  

@@ -36,13 +36,20 @@ public class VarStmNode implements Node {
 	}
   
 	public Type typeCheck () {
-		if (exp.typeCheck().getClass().equals(type.getClass() )) 
+		if(exp.typeCheck(1)instanceof ErrorType) {
+			return new ErrorType() ;
+		}
+		else if (exp.typeCheck().getClass().equals(type.getClass() )) 
 			return null ;
 		else {
 			System.out.println("Type Error: incompatible type of expression for variable "+id) ;
 			return new ErrorType() ;
 		}
 		    
+	}
+	
+	public Type typeCheck(int a) {
+		return typeCheck();
 	}
   
 	public String codeGeneration() {

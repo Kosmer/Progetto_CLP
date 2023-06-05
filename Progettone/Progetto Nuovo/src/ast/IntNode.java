@@ -19,6 +19,10 @@ public class IntNode implements Node {
 	public Type typeCheck(){
 		return new IntType();
 	} 
+	
+	public Type typeCheck(int a) {
+		return typeCheck();
+	}
   
 	public String codeGeneration() {
 		return "storei A0 "+val+"\n";

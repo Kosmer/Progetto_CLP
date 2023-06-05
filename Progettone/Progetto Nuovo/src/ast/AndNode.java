@@ -26,13 +26,21 @@ public class AndNode implements Node {
 	}
 	  
 	public Type typeCheck() {
+		if ((left.typeCheck(1) instanceof BoolType) && (right.typeCheck(1) instanceof BoolType) ) {
+			  return new BoolType() ;
+		  }
+		  else
 		  if ((left.typeCheck() instanceof BoolType) && (right.typeCheck() instanceof BoolType) ) 
 			  return new BoolType() ;
 		  else {
-			  System.out.println("Type Error: Non integers in addition") ;
+			  System.out.println("Type Error: Non boolean in addition") ;
 			  return new ErrorType() ;
 		  }
 	}  
+	
+	public Type typeCheck(int a) {
+		return typeCheck();
+	}
 	  
   
 	public String codeGeneration() {

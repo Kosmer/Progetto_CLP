@@ -35,6 +35,10 @@ public class ParNode implements Node {
      return null;
   }
   
+  public Type typeCheck(int a) {
+	  return typeCheck();
+	}
+  
   //non utilizzato
   public String codeGeneration() {
 		return "";

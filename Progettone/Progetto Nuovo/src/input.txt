@@ -1,4 +1,7 @@
-int y;
-int x;
+bool x;
+bool y;
 
-x = y;
+x=true;
+y=false;
+
+x && y;

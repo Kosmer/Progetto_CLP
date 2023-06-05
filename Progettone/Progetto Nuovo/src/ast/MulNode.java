@@ -24,6 +24,10 @@ public class MulNode implements Node {
 	 	}
 	  
 	  public Type typeCheck() {
+		  if ((left.typeCheck(1) instanceof IntType) && (right.typeCheck(1) instanceof IntType) ) {
+			  return new IntType() ;
+		  }
+		  else
 		  if ((left.typeCheck() instanceof IntType) && (right.typeCheck() instanceof IntType) ) 
 			  return new IntType() ;
 		  else {
@@ -31,6 +35,10 @@ public class MulNode implements Node {
 			  return new ErrorType() ;
 		  }	  
 	  }
+	  
+	  public Type typeCheck(int a) {
+		  return typeCheck();
+		}
 	  
 	  
 	  public String codeGeneration() {

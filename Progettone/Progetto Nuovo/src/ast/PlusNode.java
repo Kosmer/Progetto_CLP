@@ -2,6 +2,7 @@ package ast;
 
 import java.util.ArrayList;
 
+import semanticAnalysis.STentry;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
 
@@ -19,22 +20,30 @@ public class PlusNode implements Node {
 		  
 		  errors.addAll(left.checkSemantics(ST, _nesting));
 		  errors.addAll(right.checkSemantics(ST, _nesting));
-		  
+		
+
 		  return errors;
 	}
 	  
 	public Type typeCheck() {
+		  if ((left.typeCheck(1) instanceof IntType) && (right.typeCheck(1) instanceof IntType) ) {
+			  return new IntType() ;
+		  }
+		  else
 		  if ((left.typeCheck() instanceof IntType) && (right.typeCheck() instanceof IntType) ) {
 			  return new IntType() ;
 		  }
-			  
+		  
+		  
 		  else {
 			  System.out.println("Type Error: Non integers in addition") ;
 			  return new ErrorType() ;
 		  }
 	}  
 	
-	  
+	public Type typeCheck(int a) {
+		return typeCheck();
+	}
   
 	public String codeGeneration() {
 		return left.codeGeneration()+

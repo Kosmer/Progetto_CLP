@@ -55,6 +55,10 @@ public class CallNode implements Node {
 				return new ErrorType() ;
 		}
 	}
+	
+	public Type typeCheck(int a) {
+		return typeCheck();
+	}
   
   public String codeGeneration() {
 	    String parCode="";

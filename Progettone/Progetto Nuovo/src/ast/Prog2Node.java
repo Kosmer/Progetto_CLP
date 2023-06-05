@@ -46,6 +46,10 @@ public class Prog2Node implements Node {
 			exp.typeCheck();
 		return new VoidType();
 	}  
+	
+	public Type typeCheck(int a) {
+		return typeCheck();
+	}
   
 	public String codeGeneration() {
 		/*
