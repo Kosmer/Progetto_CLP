@@ -31,25 +31,18 @@ public class Main {
 		String input = new String(Files.readAllBytes(Paths.get("src\\input.txt")));
 		CharStream stream = CharStreams.fromString(input);
 		SimpLanPlusLexer lexer = new SimpLanPlusLexer(stream);
-		CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-		
-		
-		//es 2
-		//da implementare basandosi sull'interfaccia SimpLanPlusVisitor
-		SimpLanPlusParser parser = new SimpLanPlusParser(tokenStream);
-		SimpLanPlusVisitorImpl visitor = new SimpLanPlusVisitorImpl();
-		Node ast = visitor.visit(parser.prog()); //generazione AST 
-		
-		
+		CommonTokenStream tokenStream = new CommonTokenStream(lexer);	
 		
 		//analisi sintattica
 		Token token = lexer.nextToken();
 		List<Token> lexerErrors = new ArrayList<>();
 		
+		
 		while (token.getType() != SimpLanPlusLexer.EOF) {
 			if(token.getType() == SimpLanPlusLexer.ERR)
 				lexerErrors.add(token);
 			token = lexer.nextToken();
+			//System.out.println(token.getText()+" con ID "+token.getType());
 		}
 		
 		File f = new File("src\\lexical_errors.txt");
@@ -60,8 +53,6 @@ public class Main {
 			f.createNewFile();
 		}
 
-		
-		
 		if (lexerErrors.size() > 0){
 			//se ci sono stati errori di sintassi
 			System.out.println("Ci sono: " + lexerErrors.size() + " errori lessicali.\n");
@@ -70,15 +61,20 @@ public class Main {
 				int errLine = lexerErrors.get(i).getLine();
 				String errStr = lexerErrors.get(i).getText();
 				int errPos = lexerErrors.get(i).getCharPositionInLine() + 1;
-				String toWrite = "Errore, simbolo \"" + errStr + "\" non riconosciuto.\n";
+				String toWrite = "Errore in riga "+errLine+" carattere "+errPos+", simbolo \"" + errStr + "\" non riconosciuto.\n";
 				Files.write(Paths.get("src\\lexical_errors.txt"), toWrite.getBytes(), StandardOpenOption.APPEND);
 			}
 		} else {
 			
-			
-			
-			System.out.println("AAAAAAAAAAA");
 			//se non ci sono stati errori di sintassi procedo con l'analisi semantica
+			//es 2 e 3
+			stream = CharStreams.fromString(input);
+			lexer = new SimpLanPlusLexer(stream);
+			tokenStream = new CommonTokenStream(lexer);
+			SimpLanPlusParser parser = new SimpLanPlusParser(tokenStream);
+			SimpLanPlusVisitorImpl visitor = new SimpLanPlusVisitorImpl();
+			Node ast = visitor.visit(parser.prog()); //generazione AST 
+			
 			SymbolTable ST = new SymbolTable();
 			ArrayList<SemanticError> errors = ast.checkSemantics(ST, 0);
 			
