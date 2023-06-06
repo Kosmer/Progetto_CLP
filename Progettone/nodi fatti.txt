@@ -1,0 +1,12 @@
+nodi fatti:
+plus
+minus
+mul
+div
+equal
+bool
+callNode
+prog1
+decNode (? Se non assegna niente non ha nessuna codegen, giusto?)
+ifExp
+ifStm

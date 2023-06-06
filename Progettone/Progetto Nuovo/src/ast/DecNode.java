@@ -38,12 +38,6 @@ public class DecNode implements Node {
 	}
   
 	public String codeGeneration() {
-		/*
-		 * DA RIFARE
-		 
-		return exp.codeGeneration() +
-				"pushr A0 \n" ;
-		*/
 		return "";
 	}  
     

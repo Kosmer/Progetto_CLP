@@ -68,9 +68,6 @@ public class IfExpNode implements Node {
 	}
   
   	public String codeGeneration() {
-  		/*
-  		 * DA RIFARE
-  		 * 
   		String lthen = SimpLanlib.freshLabel(); 
   		String lend = SimpLanlib.freshLabel();
   		return guard.codeGeneration() +
@@ -81,8 +78,6 @@ public class IfExpNode implements Node {
 			 lthen + ":\n" +
 			 thenbranch.codeGeneration() +
 	         lend + ":\n" ; 
-	    */
-  		return "";
   	}
 
   	public String toPrint(String s) {
