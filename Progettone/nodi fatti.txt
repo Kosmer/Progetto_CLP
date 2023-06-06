@@ -10,3 +10,22 @@ prog1
 decNode (? Se non assegna niente non ha nessuna codegen, giusto?)
 ifExp
 ifStm
+lesserequal
+greaterEqual
+lesser
+greater
+and e or
+idNode
+intNode
+notNode
+parNode
+printNode
+SeqstmNode (GUARDARE SE è GIUSTO)
+SeqstmexpNode (GUARDARE)
+prog2Node (GUARDARE COME FA LUI E CAPIRE SE HO FATTO BENE)
+
+
+
+mancanti:
+funNode
+VarStmNode

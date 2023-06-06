@@ -2,6 +2,7 @@ package ast;
 
 import java.util.ArrayList;
 
+import evaluator.SimpLanlib;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
 
@@ -33,17 +34,18 @@ public class GreaterNode implements Node {
 	}  
   
 	public String codeGeneration() {
-		/*
-		 * DA RIFARE
-		 *
-		return left.codeGeneration()+
-			   "pushr A0 \n" +
-			   right.codeGeneration()+
-			   "popr T1 \n" +
-			   "add A0 T1 \n" +
-			   "popr A0 \n" ;
-		 */
-		return " ";
+		String ltrue = SimpLanlib.freshLabel(); 
+		String lend = SimpLanlib.freshLabel();
+		return	left.codeGeneration()+
+				"pushr A0 \n" +
+				right.codeGeneration()+
+				"popr T1 \n" +
+				"bg A0 T1 "+ ltrue +"\n"+
+				"storei A0 0\n"+
+				"b " + lend + "\n" +
+				ltrue + ":\n"+
+				"storei A0 1\n" +
+				lend + ":\n";
 	}
    
 	public String toPrint(String s) {

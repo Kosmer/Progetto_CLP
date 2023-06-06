@@ -2,6 +2,7 @@ package ast;
 
 import java.util.ArrayList;
 
+import evaluator.SimpLanlib;
 import parser.SimpLanPlusParser.ExpContext;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
@@ -29,17 +30,16 @@ public class NotNode implements Node {
 	  
   
 	public String codeGeneration() {
-		/*
-		 * DA RIFARE
-		 *
-		return left.codeGeneration()+
-			   "pushr A0 \n" +
-			   right.codeGeneration()+
-			   "popr T1 \n" +
-			   "add A0 T1 \n" +
-			   "popr A0 \n" ;
-		*/
-		return "";
+		String lfalse = SimpLanlib.freshLabel();
+		String lexit = SimpLanlib.freshLabel();
+		return	ctx.codeGeneration()+
+				"storei T0 0 \n"+
+				"beq A0 T0 " + lfalse + "\n"+
+				"storei A0 0\n" +
+				"b " + lexit + "\n"+
+				lfalse + ":\n"+
+				"storei A0 1\n" +
+				lexit + ":\n";
 	}
    
 	public String toPrint(String s) {

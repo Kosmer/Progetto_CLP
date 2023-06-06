@@ -33,12 +33,10 @@ public class SeqstmNode implements Node {
 	}  
   
 	public String codeGeneration() {
-		/*
-		 * DA RIFARE
-		 * 
-		 * return exp.codeGeneration()+"halt\n";
-		 */
-		return "";
+		String stmlCode="";
+		for (Node s: stmlist)
+		    stmlCode += s.codeGeneration();
+		return stmlCode;
 	}  
   
 	public String toPrint(String s) {

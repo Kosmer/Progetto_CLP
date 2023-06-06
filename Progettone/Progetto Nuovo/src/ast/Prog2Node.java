@@ -51,12 +51,19 @@ public class Prog2Node implements Node {
 	}  
   
 	public String codeGeneration() {
-		/*
-		 * DA RIFARE
-		 * 
-		 * return exp.codeGeneration()+"halt\n";
-		 */
-		return "";
+		String declCode="";
+		for (Node d: declist)
+		    declCode += d.codeGeneration();
+		String stmlCode="";
+		for (Node s: stmlist)
+		    stmlCode += s.codeGeneration();
+		String expCode="";
+		if(exp!=null)
+			expCode+=exp.codeGeneration();
+		return 	declCode +
+				stmlCode +
+				expCode +
+				"halt\n";
 	}  
   
 	public String toPrint(String s) {
