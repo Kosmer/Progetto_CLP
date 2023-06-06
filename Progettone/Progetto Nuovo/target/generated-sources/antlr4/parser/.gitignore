@@ -4,3 +4,9 @@
 /SimpLanPlusLexer.tokens
 /SimpLanPlusListener.java
 /SimpLanPlusParser.java
+/SVM.tokens
+/SVMBaseListener.java
+/SVMLexer.java
+/SVMLexer.tokens
+/SVMListener.java
+/SVMParser.java

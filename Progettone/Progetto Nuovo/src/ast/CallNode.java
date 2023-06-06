@@ -56,6 +56,7 @@ public class CallNode implements Node {
 		}
 	}
   
+	/*
 	public String codeGeneration() {
 	    String parCode="";
 	    for (int i = 0; i < parameters.size() ; i = i+1)
@@ -67,6 +68,47 @@ public class CallNode implements Node {
 				+ parCode 				// calcolo i parametri attuali con l'access link del chiamante
 				+ "jsub " + entry.getlabel() + "\n" ;
 		
+  }
+	*/
+	
+	public String codeGeneration() {
+	    String parCode="";
+	    for (int i = 0; i < parameters.size() ; i = i+1)
+	    		parCode += parameters.get(i).codeGeneration() + "pushr A0\n" ;
+	    
+	    String getAR="";
+		for (int i=0; i < nesting - entry.getnesting() ; i++) 
+		    	getAR+="store T1 0(T1) \n";
+		  					// formato AR: control_link + access link + parameters + indirizzo di ritorno + dich_locali
+
+		return  "pushr FP \n"			// carico il frame pointer
+				+ "move SP FP \n"
+				+ "addi FP 1 \n"	// salvo in FP il puntatore all'indirizzo del frame pointer caricato
+				+ "move AL T1\n"		// risalgo la catena statica
+				+ getAR
+				+ "pushr T1 \n"			// salvo sulla pila l'access link statico
+				+ parCode 				// calcolo i parametri attuali con l'access link del chiamante
+				+ "move FP AL \n"
+				+ "subi AL 1 \n"
+//				+ "store T1 0(AL) \n"
+//				+ "subi T1 " + entry.getoffset() + "\n"  
+//				+ "pushr T1 \n"
+				+ "jsub " + entry.getlabel() + "\n" ;
+		/*  	   	
+		  	   	+ "lfp\n" +				// carico il frame pointer
+		  	   "cfp\n" +				// salvo in fp il puntatore all'indirizzo di fp caricato
+		  	   "lal\n" +				// carico l'access link
+		  	   getAR +
+               parCode +				// accesso ai parametri attuali con l'access link del chiamante
+               "salfpm\n" +				// salvo l'access link della funzione che invoco in al 
+               
+               "lal\n" +
+               "lw\n" + 		 		// dereferenzio
+ 		       "push "+entry.getoffset()+"\n"+ // metto offset sullo stack
+			   "sub\n"+ 
+               "lw\n"+ 					// carico sullo stack il valore all'indirizzo ottenuto
+		       "js\n";
+		       */
   }
 
 	public String toPrint(String s) {  //

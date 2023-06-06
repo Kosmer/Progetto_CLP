@@ -101,15 +101,6 @@ public class FunNode implements Node {
   
 
   public String codeGeneration() {
-	  String stmlCode = "" ;
-	    if (stmlist.size() != 0) {
-	    		for (Node stm:stmlist){
-	    			stmlCode = stmlCode + stm.codeGeneration();
-
-	    		}
-	    }
-	  
-	  
 	  String declCode = "" ;
 	    if (declist.size() != 0) {
 	    		for (Node dec:declist){
@@ -118,6 +109,16 @@ public class FunNode implements Node {
 	    		}
 	    }
 	    
+	    
+	  String stmlCode = "" ;
+	    if (stmlist.size() != 0) {
+	    		for (Node stm:stmlist){
+	    			stmlCode = stmlCode + stm.codeGeneration();
+
+	    		}
+	    }
+	  
+	     
 	    String expCode="";
 	    if(exp!=null)
 	    	expCode+=exp.codeGeneration();
@@ -126,18 +127,34 @@ public class FunNode implements Node {
 	    SimpLanlib.putCode(
 	    			flabel + ":\n"
 	    			+ "pushr RA \n"
-	    			+ stmlCode 
+	    			
++ "pushr FP \n"
+	    			+ "move SP FP  \n"
+	    			+ "pushr AL \n"
+					+ "move SP AL \n"
+					
+					
 	    			+ declCode
+	    			+ stmlCode 
 	    			+ expCode
+	    			+
+	    			"popr AL \n"+
+	    			"popr FP \n"
+	    			
 	    			+ "popr RA \n"
 	    			+ "addi SP " + 	parlist.size() + "\n"
-	    			+ "popr SP \n"
-	    			+ "popr FP 	\n"
-	    			+ "rsub RA \n" 
+	    	    			
+					+ "pop \n"
+					+ "store FP 0(FP) \n"
+					+ "move FP AL \n"
+					+ "subi AL 1 \n"
+					+ "pop \n"
+					+ "rsub RA \n" 
 
 	    		);
-	    
-		return "push "+ flabel +"\n";	
+	    System.out.println("LABELLA: "+flabel);
+	    System.out.println("CODICE: "+SimpLanlib.getCode());
+		return "push " + flabel +"\n";	
   }
   
   

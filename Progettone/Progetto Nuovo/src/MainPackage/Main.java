@@ -1,7 +1,9 @@
 package MainPackage;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,7 +14,11 @@ import org.antlr.v4.runtime.*;
 
 import ast.ErrorType;
 import ast.Node;
+import ast.SVMVisitorImpl;
 import ast.SimpLanPlusVisitorImpl;
+import evaluator.ExecuteVM;
+import parser.SVMLexer;
+import parser.SVMParser;
 import parser.SimpLanPlusBaseVisitor;
 import parser.SimpLanPlusLexer;
 import parser.SimpLanPlusParser;
@@ -95,9 +101,35 @@ public class Main {
 					System.out.println("Type checking is WRONG!");
 				else {
 					System.out.println("Type checking ok!");
-					System.out.println("Symble Table: \n");
+					System.out.println("Symbol Table: \n");
 					System.out.println(ST.toPrint());
 				}
+				
+				
+				// CODE GENERATION  
+				String code=ast.codeGeneration(); 
+				BufferedWriter out = new BufferedWriter(new FileWriter("src\\input.txt"+".asm")); 
+				out.write(code);
+				out.close(); 
+				System.out.println("Code generated! Assembling and running generated code.");
+
+				String input2 = new String(Files.readAllBytes(Paths.get("src\\input.txt.asm")));
+				CharStream inputASM = CharStreams.fromString(input2);
+				SVMLexer lexerASM = new SVMLexer(inputASM);
+				CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
+				SVMParser parserASM = new SVMParser(tokensASM);
+
+				//parserASM.assembly();
+
+				SVMVisitorImpl visitorSVM = new SVMVisitorImpl();
+				visitorSVM.visit(parserASM.assembly()); 
+
+				//System.out.println("You had: "+lexerASM.lexicalErrors+" lexical errors and "+parserASM.getNumberOfSyntaxErrors()+" syntax errors.");
+				//if (lexerASM.lexicalErrors>0 || parserASM.getNumberOfSyntaxErrors()>0) System.exit(1);
+
+				System.out.println("Starting Virtual Machine...");
+				ExecuteVM vm = new ExecuteVM(visitorSVM.code);
+				vm.cpu();
 					
 
 				

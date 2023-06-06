@@ -61,23 +61,22 @@ public class SymbolTable {
 	}
 	
 	public String toPrint(){
-		String res="";
-		    for (HashMap<String, STentry> hashMap : symbol_table) {
-		        
-		    	for (String key : hashMap.keySet()) {
-		        	STentry e = hashMap.get(key);
-		        	res+="Entry "+e+":\n";
-		        	res+="\tID: "+key+"\n";
-		        	res+="\tTipo: "+e.gettype()+"\n";
-		        	res+="\tOffset: "+e.getoffset()+"\n";
-		        	res+="\tNesting: "+e.getnesting()+"\n";
-		        	res+="\tLabel: "+e.getlabel()+"\n";
-		        	res+="\tInitialized: "+e.getInitialized()+"\n";
-		        }
-		    }
-		    
-		    return res;
-	}
+        String res="";
+            for (HashMap<String, STentry> hashMap : symbol_table) {
+
+                for (String key : hashMap.keySet()) {
+                    STentry e = hashMap.get(key);
+                    res+="Entry ID: "+key+"\n";
+                    res+="\tTipo: "+e.gettype().getClass().getSimpleName()+"\n";
+                    res+="\tOffset: "+e.getoffset()+"\n";
+                    res+="\tNesting: "+e.getnesting()+"\n";
+                    res+="\tLabel: "+e.getlabel()+"\n";
+                    res+="\tInitialized: "+e.getInitialized()+"\n";
+                }
+            }
+
+            return res;
+    }
 	//public SymbolTable newScope(SymbolTable st) {}
 	
 	public void add(HashMap<String,STentry> H) {

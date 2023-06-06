@@ -11,6 +11,8 @@ public class VarStmNode implements Node {
 	private Node type;
 	private Node exp;
 	private int nesting;
+	private int id_offset;
+	private int id_nesting;
 	
 	public VarStmNode(String _id, Node _exp) {
 		id = _id ;
@@ -23,11 +25,14 @@ public class VarStmNode implements Node {
         
   		STentry T = ST.lookup(id);
   		
+  		
         if (T == null) 
         	errors.add(new SemanticError("Var id " + id + " not declared"));
         
         else {
         	T.setInitialized();
+        	id_offset = T.getoffset();
+        	id_nesting = T.getnesting();
         	type = T.gettype();
         }
         
@@ -50,7 +55,13 @@ public class VarStmNode implements Node {
 	}
   
 	public String codeGeneration() {
+	//	String getAR="";
+	//	for (int i=0; i < nesting - id_nesting; i++) 
+	//    	 getAR += "store T1 0(T1) \n";
 		return exp.codeGeneration() +
+				"move AL T1 \n" +
+				"subi T1 " + id_offset +"\n" +
+				"load A0 0(T1)"+
 				"pushr A0 \n" ;
 	}  
     

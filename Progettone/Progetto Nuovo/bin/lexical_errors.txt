@@ -1,1 +1,0 @@
-Errore in riga 1 carattere 6, simbolo "_" non riconosciuto.

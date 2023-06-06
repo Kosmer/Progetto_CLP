@@ -1,1 +1,1 @@
-int a_;
+void f(){int x;x=3};
