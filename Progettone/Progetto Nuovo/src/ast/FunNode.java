@@ -101,56 +101,43 @@ public class FunNode implements Node {
   
 
   public String codeGeneration() {
-/*	  
- * DA RIFARE
- * 
-	    String declCode = "" ;
-//	    String popDecl = "" ;
+	  String stmlCode = "" ;
+	    if (stmlist.size() != 0) {
+	    		for (Node stm:stmlist){
+	    			stmlCode = stmlCode + stm.codeGeneration();
+
+	    		}
+	    }
+	  
+	  
+	  String declCode = "" ;
 	    if (declist.size() != 0) {
 	    		for (Node dec:declist){
 	    			declCode = declCode + dec.codeGeneration();
-//	    			popDecl = popDecl + "pop\n";
-	    		}
- 	    }
 
-//	    String popParl="";
-//	    for (Node dec:parlist) popParl+="pop\n";
+	    		}
+	    }
+	    
+	    String expCode="";
+	    if(exp!=null)
+	    	expCode+=exp.codeGeneration();
+
 	     
 	    SimpLanlib.putCode(
 	    			flabel + ":\n"
 	    			+ "pushr RA \n"
+	    			+ stmlCode 
 	    			+ declCode
-	    			+ body.codeGeneration()
-//	    			+ "move A0 RV \n"
-	    			+ "addi SP " + 	declist.size() + "\n"
+	    			+ expCode
 	    			+ "popr RA \n"
 	    			+ "addi SP " + 	parlist.size() + "\n"
-	    			+ "pop \n"
-	    			+ "store FP 0(FP) \n"
-	    			+ "move FP AL \n"
-	    			+ "subi AL 1 \n"
-	    			+ "pop \n"
+	    			+ "popr SP \n"
+	    			+ "popr FP 	\n"
 	    			+ "rsub RA \n" 
-   		
-	    		"lra\n"+ 				// inserimento return address
-	    		declCode+ 				// inserimento dichiarazioni locali
-	    		body.codeGeneration()+
-	    		"srv\n"+ 				// pop del return value e memorizzazione in rv
-	    		popDecl+				// rimuove lo spazio per le variabili locali
-	    		"sra\n"+ 				// pop del return address e memorizzazione in $ra
-	    		popParl+				// rimuove lo spazio dei parametri
-	    		"pop\n" +				// cancella access link
-	    		"sfp\n"+  				// memorizza in fp il valore del frame pointer precedente (che si trova sulla pila)
-	    		"salfpm \n" +			// memorizza in al l'ambiente del chiamante (che si trova a fp -1)
-	    		"lrv\n"+ 				// risultato della funzione sullo stack
-	    		"lra\n"+
-	    		"js\n"  				// salta a ra
-	    		
+
 	    		);
 	    
-		return "push "+ flabel +"\n";
-		*/
-	  return "";	
+		return "push "+ flabel +"\n";	
   }
   
   
