@@ -55,11 +55,12 @@ public class VarStmNode implements Node {
 	}
   
 	public String codeGeneration() {
-	//	String getAR="";
-	//	for (int i=0; i < nesting - id_nesting; i++) 
-	//    	 getAR += "store T1 0(T1) \n";
+		String getAR="";
+		for (int i=0; i < nesting - id_nesting; i++) 
+	    	 getAR += "store T1 0(T1) \n";
 		return exp.codeGeneration() +
 				"move AL T1 \n" +
+				getAR+
 				"subi T1 " + id_offset +"\n" +
 				"load A0 0(T1) \n"+
 				"pushr A0 \n" ;
