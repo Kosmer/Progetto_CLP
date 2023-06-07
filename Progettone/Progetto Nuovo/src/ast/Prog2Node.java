@@ -3,6 +3,7 @@ package ast;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import evaluator.SimpLanlib;
 import semanticAnalysis.STentry;
 import semanticAnalysis.SemanticError ;
 import semanticAnalysis.SymbolTable ;
@@ -60,10 +61,15 @@ public class Prog2Node implements Node {
 		String expCode="";
 		if(exp!=null)
 			expCode+=exp.codeGeneration();
-		return 	declCode +
+		return 	"move SP FP \n" +
+				"pushr FP \n"+
+				"move SP AL \n"+
+				"pushr AL \n"+
+				declCode +
 				stmlCode +
 				expCode +
-				"halt\n";
+				"halt\n"+
+				SimpLanlib.getCode();
 	}  
   
 	public String toPrint(String s) {

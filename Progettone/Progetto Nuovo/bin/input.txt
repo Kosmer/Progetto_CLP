@@ -1,2 +1,4 @@
-int x(){int y; y=2;y}
-x()
+int z;
+int x(){int a; a=4; a}
+z = x();
+z+2

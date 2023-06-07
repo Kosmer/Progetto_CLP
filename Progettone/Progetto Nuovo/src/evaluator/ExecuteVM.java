@@ -228,7 +228,8 @@ public class ExecuteVM {
                     break;
               case SVMParser.HALT : //to print the result 
              		System.out.println("\nResult: " + a0 + "\n");
-             		return;          
+             		return;     
+         		
             } 
     	}   	  	
     } 

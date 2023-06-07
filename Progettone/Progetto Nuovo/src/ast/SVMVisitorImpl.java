@@ -50,6 +50,7 @@ public class SVMVisitorImpl extends SVMBaseVisitor<Void> {
     }
     
     public Void visitInstruction(SVMParser.InstructionContext ctx) { 
+    	System.out.println("CODICE ISTRUZ: "+ctx.getStart().getType());
     	switch (ctx.getStart().getType()) {
     		case SVMLexer.LOAD:
      			code[i] = new AssemblyClass(SVMParser.LOAD, ctx.REG(0).toString(), ctx.NUMBER().toString(),ctx.REG(1).toString());

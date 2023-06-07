@@ -74,7 +74,7 @@ public class CallNode implements Node {
 	public String codeGeneration() {
 	    String parCode="";
 	    for (int i = 0; i < parameters.size() ; i = i+1)
-	    		parCode += parameters.get(i).codeGeneration() + "pushr A0\n" ;
+	    		parCode += parameters.get(i).codeGeneration() + " pushr A0\n" ;
 	    
 	    String getAR="";
 		for (int i=0; i < nesting - entry.getnesting() ; i++) 
