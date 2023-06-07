@@ -133,7 +133,8 @@ public class FunNode implements Node {
 	    			+declCode
 	    			+stmlCode
 	    			+expCode
-	    			+ "pop RA \n"
+	    			+ "addi SP " + 	stmlist.size() + "\n"
+	    			+ "popr RA \n"
 	    			+ "addi SP " + 	parlist.size() + "\n"
 	    			+ "pop \n"
 	    			+ "store FP 0(FP) \n"
