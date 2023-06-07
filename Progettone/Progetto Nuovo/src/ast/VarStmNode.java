@@ -61,7 +61,7 @@ public class VarStmNode implements Node {
 		return exp.codeGeneration() +
 				"move AL T1 \n" +
 				"subi T1 " + id_offset +"\n" +
-				"load A0 0(T1)"+
+				"load A0 0(T1) \n"+
 				"pushr A0 \n" ;
 	}  
     

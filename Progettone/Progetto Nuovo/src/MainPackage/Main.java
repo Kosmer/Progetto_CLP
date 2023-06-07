@@ -108,6 +108,7 @@ public class Main {
 				
 				// CODE GENERATION  
 				String code=ast.codeGeneration(); 
+				System.out.println(code);
 				BufferedWriter out = new BufferedWriter(new FileWriter("src\\input.txt"+".asm")); 
 				out.write(code);
 				out.close(); 

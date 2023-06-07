@@ -25,7 +25,9 @@ public class SVMVisitorImpl extends SVMBaseVisitor<Void> {
     		for (Integer refAdd : labelRef.keySet()) {
     			int tmp = refAdd ;
     			String s = labelRef.get(refAdd) ;
+    			System.out.println(s);
                 if (code[tmp] == null) {
+                	System.out.println("maksdmklmdalsdmasl");
                 	code[tmp] =  new AssemblyClass(labelAdd.get(s), null, null, null);
                 } else {
                 	code[tmp].setArg1(labelAdd.get(s).toString()); 
@@ -119,6 +121,7 @@ public class SVMVisitorImpl extends SVMBaseVisitor<Void> {
     			i = i+1 ;
 				break;		
 			case SVMLexer.LABEL:
+				System.out.println("AGGIUNGO ETICHETTA");
 				labelAdd.put(ctx.l.getText(),i);
 				break;
 			case SVMLexer.BRANCH:

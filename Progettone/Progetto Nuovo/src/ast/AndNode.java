@@ -38,9 +38,10 @@ public class AndNode implements Node {
   
 	public String codeGeneration() {
 		String lexit = SimpLanlib.freshLabel();
+		System.out.println(lexit);
 		return	left.codeGeneration()+
-				"storei T0 0 \n"+
-				"beq A0 T0 " + lexit + "\n"+
+				"storei T1 0 \n"+
+				"beq A0 T1 " + lexit + "\n"+
 				right.codeGeneration()+
 				lexit + ":\n";
 	}

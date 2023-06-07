@@ -37,8 +37,8 @@ public class OrNode implements Node {
 	public String codeGeneration() {
 		String lexit = SimpLanlib.freshLabel();
 		return	left.codeGeneration()+
-				"storei T0 1 \n"+
-				"beq A0 T0 " + lexit + "\n"+
+				"storei T1 1 \n"+
+				"beq A0 T1 " + lexit + "\n"+
 				right.codeGeneration()+
 				lexit + ":\n";
 	}

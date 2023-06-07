@@ -33,8 +33,8 @@ public class NotNode implements Node {
 		String lfalse = SimpLanlib.freshLabel();
 		String lexit = SimpLanlib.freshLabel();
 		return	ctx.codeGeneration()+
-				"storei T0 0 \n"+
-				"beq A0 T0 " + lfalse + "\n"+
+				"storei T1 0 \n"+
+				"beq A0 T1 " + lfalse + "\n"+
 				"storei A0 0\n" +
 				"b " + lexit + "\n"+
 				lfalse + ":\n"+

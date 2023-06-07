@@ -53,7 +53,9 @@ public class FunNode implements Node {
 			type = new ArrowType(partypes, returntype) ;
 			
 			ST.increaseoffset() ; // aumentiamo di 1 l'offset per far posto al return value
-			ST.insert(id, type, nesting, flabel) ;
+			//PER RICORSIONE
+			//flabel = SimpLanlib.freshFunLabel() ;
+			//ST.insert(id, type, nesting, flabel) ;
 			for (Node dec : declist)
   				errors.addAll(dec.checkSemantics(ST, nesting+1));
 			
@@ -101,7 +103,7 @@ public class FunNode implements Node {
   
 
   public String codeGeneration() {
-	  String declCode = "" ;
+	  	String declCode = "" ;
 	    if (declist.size() != 0) {
 	    		for (Node dec:declist){
 	    			declCode = declCode + dec.codeGeneration();
@@ -127,27 +129,15 @@ public class FunNode implements Node {
 	    SimpLanlib.putCode(
 	    			flabel + ":\n"
 	    			+ "pushr RA \n"
-	    			
-+ "pushr FP \n"
-	    			+ "move SP FP  \n"
-	    			+ "pushr AL \n"
-					+ "move SP AL \n"
-					
-					
-	    			+ declCode
-	    			+ stmlCode 
-	    			+ expCode
-	    			+
-	    			"popr AL \n"+
-	    			"popr FP \n"
-	    			
-	    			+ "popr RA \n"
+	    			+declCode
+	    			+stmlCode
+	    			+expCode
+	    			+ "pop RA \n"
 	    			+ "addi SP " + 	parlist.size() + "\n"
-	    	    			
-					+ "pop \n"
-					+ "store FP 0(FP) \n"
-					+ "move FP AL \n"
-					+ "subi AL 1 \n"
+	    			+ "store FP 0(FP) \n"
+	    			+ "move FP AL \n"
+	   				+ "subi AL 1 \n"
+	   				+ "pop \n"	
 					+ "pop \n"
 					+ "rsub RA \n" 
 
