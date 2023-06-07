@@ -53,15 +53,22 @@ public class IfExpNode implements Node {
   
 	public Type typeCheck() {
 		if (guard.typeCheck() instanceof BoolType) {
+			
 			Type thenexp = thenbranch.typeCheck() ;
 			Type elseexp = elsebranch.typeCheck() ;
 			if (thenexp.getClass().equals(elseexp.getClass()))
-        		return thenexp;
+			{
+				
+				return thenexp;
+			}
+        		
 			else {
+				
         		System.out.println("Type Error: incompatible types in then and else branches");
         		return new ErrorType() ;	
 			}
 		} else {
+			
 			System.out.println("Type Error: non boolean condition in if");
 			return new ErrorType() ;
 		}   

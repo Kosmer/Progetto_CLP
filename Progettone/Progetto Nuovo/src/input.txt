@@ -1,4 +1,7 @@
-int z;
-int x(int b){int a; a=5; a}
-z = x(2);
-z
+int x ;
+void f(int n){ 
+	if (n == 0) { n = 0 ; }       
+	else { x = x * n ; f(n-1) ; }	
+}
+x = 1 ;
+f(10) 

@@ -55,15 +55,20 @@ public class FunNode implements Node {
 			ST.increaseoffset() ; // aumentiamo di 1 l'offset per far posto al return value
 			//PER RICORSIONE
 			//flabel = SimpLanlib.freshFunLabel() ;
-			//ST.insert(id, type, nesting, flabel) ;
+			
 			for (Node dec : declist)
   				errors.addAll(dec.checkSemantics(ST, nesting+1));
+			
+			ST.insert(id, type, nesting, "") ;
 			
 			for (Node stm : stmlist)
 				errors.addAll(stm.checkSemantics(ST, nesting+1));
 			
+			
 			if(exp!=null)
 				errors.addAll(exp.checkSemantics(ST, nesting+1));
+			
+			
 			ST.remove();
 			
 			flabel = SimpLanlib.freshFunLabel() ;
@@ -83,7 +88,7 @@ public class FunNode implements Node {
 				stm.typeCheck();
 		if(exp!=null) {
 			Type exp_type = exp.typeCheck();
-			if ( (exp.typeCheck().getClass()).equals(returntype.getClass())) {
+				if ( (exp.typeCheck().getClass()).equals(returntype.getClass())) {
     			if(exp_type instanceof BoolType) {
     				return new BoolType();
     			}

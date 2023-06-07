@@ -257,7 +257,11 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 		ArrayList<Node> args = new ArrayList<Node>();
 		
 		for (ExpContext exp : ctx.exp())
+		{
+			
 			args.add(visit(exp));
+		}
+			
 		
 		// this is ad-hoc for this project...
 		if(ctx.ID().getText().equals("print"))

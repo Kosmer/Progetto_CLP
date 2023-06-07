@@ -33,9 +33,9 @@ public class SeqstmexpNode implements Node {
 		if (stmlist!=null) 
 			for (Node stm:stmlist)
 				stm.typeCheck();
-		exp.typeCheck();
+		return exp.typeCheck();
 
-		return null;
+		
 	}  
   
 	public String codeGeneration() {
