@@ -17,6 +17,7 @@ public class FunNode implements Node {
 	private ArrowType type ;
 	private int nesting ;
 	private String flabel ;
+	private String prelabel;
   
 	public FunNode (String _id, Type _type, ArrayList<ParNode> _parlist, ArrayList<Node> _declist, ArrayList<Node> _stmlist, Node _exp) {
 		id = _id ;
@@ -131,7 +132,8 @@ public class FunNode implements Node {
 	    if(exp!=null)
 	    	expCode+=exp.codeGeneration();
 
-	     
+	    
+	    
 	    SimpLanlib.putCode(
 	    			flabel + ":\n"
 	    			+ "pushr RA \n"
@@ -149,10 +151,32 @@ public class FunNode implements Node {
 					+ "rsub RA \n" 
 
 	    		);
+	    
+	    
+	    prelabel = SimpLanlib.freshFunLabel() ;
+	    
+	    SimpLanlib.putCode(
+    			prelabel + ":\n"
+    			+ "pushr RA \n"
+    			+ "popr RA \n"
+    			+ "addi SP " + 	parlist.size() + "\n"
+    			+ "pop \n"
+    			+ "store FP 0(FP) \n"
+    			+ "move FP AL \n"
+   				+ "subi AL 1 \n"
+   				+ "pop \n"	
+				+ "rsub RA \n" 
+    		);
+	    
 	    System.out.println("LABELLA: "+flabel);
 	    System.out.println("CODICE: "+SimpLanlib.getCode());
-		return "push " + flabel +"\n";	
+		return 
+				//"push " + prelabel +"\n" +
+				"push " + flabel +"\n";	
   }
+  
+  
+  
   
   
   public String toPrint(String s) {

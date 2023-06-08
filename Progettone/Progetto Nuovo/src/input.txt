@@ -1,7 +1,7 @@
 int x ;
 void f(int n){ 
-	if (n == 0) { n = 0 ; }       
-	else { x = x * n ; f(n-1) ; }	
+	if (n == 0) { n = 0 ;}       
+	else { f(0) ;}	
 }
 x = 1 ;
-f(10) 
+f(2)
