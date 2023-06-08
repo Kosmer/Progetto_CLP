@@ -2,7 +2,7 @@ package ast;
 
 import java.util.ArrayList;
 
-import evaluator.SimpLanlib;
+import evaluator.SimpLanPluslib;
 import parser.SimpLanPlusParser.ExpContext;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
@@ -30,8 +30,8 @@ public class NotNode implements Node {
 	  
   
 	public String codeGeneration() {
-		String lfalse = SimpLanlib.freshLabel();
-		String lexit = SimpLanlib.freshLabel();
+		String lfalse = SimpLanPluslib.freshLabel();
+		String lexit = SimpLanPluslib.freshLabel();
 		return	ctx.codeGeneration()+
 				"storei T1 0 \n"+
 				"beq A0 T1 " + lfalse + "\n"+

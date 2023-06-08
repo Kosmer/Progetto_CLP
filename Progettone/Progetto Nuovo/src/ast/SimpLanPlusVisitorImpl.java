@@ -78,24 +78,18 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 
 	@Override
 	public Node visitFunDec(FunDecContext ctx) {
-		//initialize @res with the visits to the type and its ID
 		
-		
-		//add argument declarations
-		//we are getting a shortcut here by constructing directly the ParNode
-		//this could be done differently by visiting instead the VardecContext
 		ArrayList<ParNode> _param = new ArrayList<ParNode>() ;
 				
 		for (ParamContext vc : ctx.param())
 			_param.add( new ParNode(vc.ID().getText(), (Type) visit( vc.type() )) );
 		
-		//add body
-		//create a list for the nested declarations
+		
 		ArrayList<Node> innerDec = new ArrayList<Node>();
 		ArrayList<Node> innerStm = new ArrayList<Node>();
 		Node innerExp = null;
 		
-		//check whether there are actually nested decs
+		
 		if(ctx.body() != null){
 			if(ctx.body().dec()!=null) {
 				for(DecContext dc : ctx.body().dec())
@@ -108,7 +102,7 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 			if(ctx.body().exp()!=null) {
 				innerExp = visit(ctx.body().exp()); 
 			}
-			//if there are visit each dec and add it to the @innerDec list
+			
 			
 			
 				

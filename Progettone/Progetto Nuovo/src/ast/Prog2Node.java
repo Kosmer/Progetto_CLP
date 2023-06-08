@@ -3,7 +3,7 @@ package ast;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import evaluator.SimpLanlib;
+import evaluator.SimpLanPluslib;
 import semanticAnalysis.STentry;
 import semanticAnalysis.SemanticError ;
 import semanticAnalysis.SymbolTable ;
@@ -76,7 +76,7 @@ public class Prog2Node implements Node {
 				stmlCode +
 				expCode +
 				"halt\n"+
-				SimpLanlib.getCode();
+				SimpLanPluslib.getCode();
 	}  
   
 	public String toPrint(String s) {

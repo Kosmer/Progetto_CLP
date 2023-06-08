@@ -26,9 +26,6 @@ public class DecNode implements Node {
 	}
   
 	public Type typeCheck () {
-		/*
-		 * Giusto?
-		 */
 		if(type instanceof VoidType) {
   			System.out.println("Not possible to declare var '"+id+ "' to type void");
 			return new ErrorType() ;
@@ -42,9 +39,6 @@ public class DecNode implements Node {
 	}  
     
 	public String toPrint(String s) {
-		/*
-		 * Giusto?
-		 */
 		return "  "+ s + "DecVar:" + id + type.toPrint(" ") + "\n"; 
 	}
 

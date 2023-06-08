@@ -2,7 +2,7 @@ package ast;
 
 import java.util.ArrayList;
 
-import evaluator.SimpLanlib;
+import evaluator.SimpLanPluslib;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
 
@@ -34,8 +34,8 @@ public class GreaterEqualsNode implements Node {
 	}  
   
 	public String codeGeneration() {
-		String ltrue = SimpLanlib.freshLabel(); 
-		String lend = SimpLanlib.freshLabel();
+		String ltrue = SimpLanPluslib.freshLabel(); 
+		String lend = SimpLanPluslib.freshLabel();
 		return	left.codeGeneration()+
 				"pushr A0 \n" +
 				right.codeGeneration()+

@@ -3,7 +3,7 @@ package ast;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import evaluator.SimpLanlib;
+import evaluator.SimpLanPluslib;
 import semanticAnalysis.STentry;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
@@ -77,8 +77,8 @@ public class IfExpNode implements Node {
 	}
   
   	public String codeGeneration() {
-  		String lthen = SimpLanlib.freshLabel(); 
-  		String lend = SimpLanlib.freshLabel();
+  		String lthen = SimpLanPluslib.freshLabel(); 
+  		String lend = SimpLanPluslib.freshLabel();
   		return guard.codeGeneration() +
 			 "storei T1 1 \n" +
 			 "beq A0 T1 "+ lthen + "\n" +			  

@@ -2,7 +2,7 @@ package ast;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import evaluator.SimpLanlib;
+import evaluator.SimpLanPluslib;
 import semanticAnalysis.STentry;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
@@ -59,13 +59,11 @@ public class FunNode implements Node {
 			type = new ArrowType(partypes, returntype) ;
 			
 			ST.increaseoffset() ; // aumentiamo di 1 l'offset per far posto al return value
-			//PER RICORSIONE
-			//flabel = SimpLanlib.freshFunLabel() ;
 			
 			for (Node dec : declist)
   				errors.addAll(dec.checkSemantics(ST, nesting+1));
 			
-			ST.insert(id, type, nesting, "") ;
+			ST.insert(id, type, nesting, flabel) ;
 			STentry T = ST.lookup(id);
 			T.setInitialized();
 			
@@ -79,14 +77,14 @@ public class FunNode implements Node {
 			
 			ST.remove();
 			
-			flabel = SimpLanlib.freshFunLabel() ;
+			flabel = SimpLanPluslib.freshFunLabel() ;
 			
 			ST.insert(id, type, nesting, flabel) ;
 			T = ST.lookup(id);
 			T.setInitialized();
 			
 		}
-		return errors ; // problemi con la generazione di codice!
+		return errors ;
 	}
   
  	public Type typeCheck () {
@@ -179,7 +177,7 @@ public class FunNode implements Node {
 
 	    
 	    
-	    SimpLanlib.putCode(
+	    SimpLanPluslib.putCode(
 	    			flabel + ":\n"
 	    			+ "pushr RA \n"
 	    			+declCode
@@ -198,9 +196,9 @@ public class FunNode implements Node {
 	    		);
 	    
 	    
-	    prelabel = SimpLanlib.freshFunLabel() ;
+	    prelabel = SimpLanPluslib.freshFunLabel() ;
 	    
-	    SimpLanlib.putCode(
+	    SimpLanPluslib.putCode(
     			prelabel + ":\n"
     			+ "pushr RA \n"
     			+ "popr RA \n"
@@ -215,7 +213,7 @@ public class FunNode implements Node {
 	    
 	    
 	    System.out.println("LABELLA: "+flabel);
-	    System.out.println("CODICE: "+SimpLanlib.getCode());
+	    System.out.println("CODICE: "+SimpLanPluslib.getCode());
 		return 
 				"push " + prelabel +"\n" +
 				"push " + flabel +"\n";	
@@ -237,7 +235,7 @@ public class FunNode implements Node {
 		String stmlstr= "";
 		String explstr="";
 		if (declist!=null) {
-			//declstr+="   ";
+			
 			for (Node dec:declist)
 			    declstr+=dec.toPrint("  "+s+"");
 		}
@@ -247,7 +245,7 @@ public class FunNode implements Node {
 			stmlstr+="   ";
 			for (Node stm:stmlist)
 			    stmlstr+=stm.toPrint(s+" ");
-		//	stmlstr+="\n";
+		
 		}
 			  
 		if (exp!=null) {
@@ -263,6 +261,6 @@ public class FunNode implements Node {
 		   	   +explstr; 
 	  }
 	  
-	  //valore di ritorno non utilizzato
+	  
 
 }  

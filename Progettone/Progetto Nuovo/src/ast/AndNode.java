@@ -2,7 +2,7 @@ package ast;
 
 import java.util.ArrayList;
 
-import evaluator.SimpLanlib;
+import evaluator.SimpLanPluslib;
 import semanticAnalysis.STentry;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
@@ -37,7 +37,7 @@ public class AndNode implements Node {
 	  
   
 	public String codeGeneration() {
-		String lexit = SimpLanlib.freshLabel();
+		String lexit = SimpLanPluslib.freshLabel();
 		System.out.println(lexit);
 		return	left.codeGeneration()+
 				"storei T1 0 \n"+

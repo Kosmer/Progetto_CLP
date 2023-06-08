@@ -3,7 +3,7 @@ package ast;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import evaluator.SimpLanlib;
+import evaluator.SimpLanPluslib;
 import semanticAnalysis.STentry;
 import semanticAnalysis.SemanticError;
 import semanticAnalysis.SymbolTable;
@@ -33,9 +33,6 @@ public class IfStmNode implements Node {
 	  errors.addAll(thenbranch.checkSemantics(S1, _nesting));
 	  if(elsebranch!=null)
 		  errors.addAll(elsebranch.checkSemantics(S2, _nesting));
-	  //System.out.println("ST: "+ST.toPrint());
-	  //System.out.println("S1: "+S1.toPrint());
-	  //System.out.println("S2: "+S2.toPrint());
 	  
 	  ArrayList<HashMap<String,STentry>> t1 = S1.getSymbolTable();
 	  ArrayList<HashMap<String,STentry>> t2 = S2.getSymbolTable();
@@ -87,8 +84,8 @@ public class IfStmNode implements Node {
 	}
   
   	public String codeGeneration() {
-  		String lthen = SimpLanlib.freshLabel(); 
-  		String lend = SimpLanlib.freshLabel();
+  		String lthen = SimpLanPluslib.freshLabel(); 
+  		String lend = SimpLanPluslib.freshLabel();
   		return guard.codeGeneration() +
 			 "storei T1 1 \n" +
 			 "beq A0 T1 "+ lthen + "\n" +			  
