@@ -1,5 +1,7 @@
-int a; 
-int b; 
-int c ; 
-c = 2;
-if (true) {a = c; c} else { a = c; c}
+int u ;
+void f(int m, int n){
+	int x ;
+	if (m>n) { u = m+n ;}
+	else {  x = 1 ; u=2; f(m+1,n+1) ; }
+}
+f(4,5) ; u

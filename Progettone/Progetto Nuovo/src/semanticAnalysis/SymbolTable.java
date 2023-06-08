@@ -60,6 +60,13 @@ public class SymbolTable {
 	    return newSymbolTable;
 	}
 	
+		
+	public void addCopyEnv() {
+		
+		this.add(symbol_table.get(symbol_table.size()-1));
+		this.offset.add(offset.get((offset.size()-1)));
+	}
+	
 	public String toPrint(){
         String res="";
             for (HashMap<String, STentry> hashMap : symbol_table) {

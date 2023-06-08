@@ -45,6 +45,7 @@ public class FunNode implements Node {
 			ArrayList<Type> partypes = new ArrayList<Type>() ;
 		
 			ST.add(HM);
+			//ST.addCopyEnv();
 			
 			for (ParNode arg : parlist){
     	  			partypes.add(arg.getType());
@@ -60,12 +61,15 @@ public class FunNode implements Node {
 			
 			ST.increaseoffset() ; // aumentiamo di 1 l'offset per far posto al return value
 			
-			for (Node dec : declist)
-  				errors.addAll(dec.checkSemantics(ST, nesting+1));
-			
+			flabel = SimpLanPluslib.freshFunLabel() ;
 			ST.insert(id, type, nesting, flabel) ;
 			STentry T = ST.lookup(id);
 			T.setInitialized();
+			
+			for (Node dec : declist)
+  				errors.addAll(dec.checkSemantics(ST, nesting+1));
+			
+			
 			
 			for (Node stm : stmlist)
 				errors.addAll(stm.checkSemantics(ST, nesting+1));
@@ -77,7 +81,7 @@ public class FunNode implements Node {
 			
 			ST.remove();
 			
-			flabel = SimpLanPluslib.freshFunLabel() ;
+			
 			
 			ST.insert(id, type, nesting, flabel) ;
 			T = ST.lookup(id);
@@ -195,7 +199,7 @@ public class FunNode implements Node {
 
 	    		);
 	    
-	    
+	    /*
 	    prelabel = SimpLanPluslib.freshFunLabel() ;
 	    
 	    SimpLanPluslib.putCode(
@@ -211,11 +215,11 @@ public class FunNode implements Node {
 				+ "rsub RA \n" 
     		);
 	    
-	    
+	    */
 	    System.out.println("LABELLA: "+flabel);
 	    System.out.println("CODICE: "+SimpLanPluslib.getCode());
 		return 
-				"push " + prelabel +"\n" +
+				//"push " + prelabel +"\n" +
 				"push " + flabel +"\n";	
   }
   
