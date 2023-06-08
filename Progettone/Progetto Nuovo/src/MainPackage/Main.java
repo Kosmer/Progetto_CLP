@@ -67,7 +67,7 @@ public class Main {
 				int errLine = lexerErrors.get(i).getLine();
 				String errStr = lexerErrors.get(i).getText();
 				int errPos = lexerErrors.get(i).getCharPositionInLine() + 1;
-				String toWrite = "Errore in riga "+errLine+" carattere "+errPos+", simbolo \"" + errStr + "\" non riconosciuto.\n";
+				String toWrite = "[!] Errore in riga "+errLine+" carattere "+errPos+", simbolo \"" + errStr + "\" non riconosciuto.\n";
 				Files.write(Paths.get("src\\lexical_errors.txt"), toWrite.getBytes(), StandardOpenOption.APPEND);
 			}
 		} else {
@@ -85,15 +85,16 @@ public class Main {
 			ArrayList<SemanticError> errors = ast.checkSemantics(ST, 0);
 			
 			if(errors.size()>0){
-				System.out.println("You had: " + errors.size() + " errors:");
+				System.out.println("You had " + errors.size() + " errors:");
 				for(SemanticError e : errors) {
-					System.out.println("slpc,as,s");
 					System.out.println("\t" + e);
 				}
 					
 			} else {
-				System.out.println("Visualizing AST...");
-				System.out.println(ast.toPrint(""));
+				//System.out.println("Visualizing AST...");
+				//System.out.println(ast.toPrint(""));
+				
+				System.out.println("CheckSemantic ok!");
 				
 				//controllare casting
 				Node type = (Node)ast.typeCheck(); //type-checking bottom-up 
@@ -103,7 +104,7 @@ public class Main {
 					System.out.println("Type checking ok!");
 					System.out.println("Symbol Table: \n");
 					System.out.println(ST.toPrint());
-				}
+				
 				
 				
 				// CODE GENERATION  
@@ -132,7 +133,7 @@ public class Main {
 				ExecuteVM vm = new ExecuteVM(visitorSVM.code);
 				vm.cpu();
 					
-
+				}
 				
 			}
 			

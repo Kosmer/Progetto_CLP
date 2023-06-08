@@ -42,12 +42,19 @@ public class Prog2Node implements Node {
 				if (dec.typeCheck() instanceof ErrorType)
 					return new ErrorType();
 		if (stmlist!=null) 
-			for (Node stm:stmlist)
-				if (stm.typeCheck() instanceof ErrorType)
+			for (Node stm:stmlist) {
+				if (stm.typeCheck() instanceof ErrorType) {
 					return new ErrorType();
+				}
+			}
+				
+					
 		if (exp!=null)
-			if (exp.typeCheck() instanceof ErrorType)
+			if (exp.typeCheck() instanceof ErrorType) {
+				
 				return new ErrorType();
+			}
+				
 		return new VoidType();
 	}  
   

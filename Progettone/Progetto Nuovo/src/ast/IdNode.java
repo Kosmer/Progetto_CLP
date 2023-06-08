@@ -22,7 +22,7 @@ public class IdNode implements Node {
 		
 		STentry st_type = ST.lookup(id) ;
 		if (st_type == null)
-			errors.add(new SemanticError("Id " + id + " not declared"));
+			errors.add(new SemanticError("Id '" + id + "' not declared"));
 		else type = st_type ;
 
 		return errors;
@@ -34,25 +34,14 @@ public class IdNode implements Node {
 			return new ErrorType() ;
 		}
 		if (type.getInitialized()==false) {
-			System.out.println("Type Error: Var "+id+" not initialized");
+			System.out.println("Type Error: Var '"+id+"' not initialized");
 			return new ErrorType() ;
-		}else return type.gettype() ;
+		}else 
+			return type.gettype() ;
+		
 	}
 	
-	public Type typeCheck (int a) {
-			if (type.gettype() instanceof ArrowType) { //
-				System.out.println("Wrong usage of function identifier");
-				return new ErrorType() ;
-			}
-			if (type.getInitialized()==false) {
-				System.out.println("Type Error: Var "+id+" not initialized");
-				return new ErrorType() ;
-			}	
-			else
-				return type.gettype() ;
-		
-		
-	}
+	
   
 	public String codeGeneration() {
 		String getAR="";

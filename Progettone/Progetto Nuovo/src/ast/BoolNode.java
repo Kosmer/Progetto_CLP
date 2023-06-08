@@ -28,5 +28,9 @@ public class BoolNode implements Node {
 	public String toPrint(String s) {
 		return s + String.valueOf(val) +"\n";  
 	}
+	
+	public boolean getVal() {
+		return val;
+	}
 
 }  

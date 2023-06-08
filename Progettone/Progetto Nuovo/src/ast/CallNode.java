@@ -26,7 +26,7 @@ public class CallNode implements Node {
 				for (Node par : parameters)
 					 errors.addAll(par.checkSemantics(ST, nesting));
 		} else {
-			 	errors.add(new SemanticError("Id " + id + " not declared")) ;
+			 	errors.add(new SemanticError("Id '" + id + "' not declared")) ;
 		}
 		return errors;
   }
@@ -36,14 +36,14 @@ public class CallNode implements Node {
 		if (_type instanceof ArrowType) {			 
 			ArrayList<Type> _partype = ((ArrowType) _type).get_inputtype();
 			if ( _partype.size() != parameters.size() ) {
-				System.out.println("Wrong number of parameters in the invocation of "+id);
+				System.out.println("Wrong number of parameters in the invocation of '"+id+"'.");
 				return new ErrorType() ;
 			} else {
 				boolean ok = true ;
 				for (int i = 0 ; i < parameters.size() ; i++) {
 					Type par_i = (parameters.get(i)).typeCheck() ;
 					if ( !(par_i.getClass().equals(_partype.get(i).getClass()) )) {
-							System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of "+id);
+							System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of '"+id+"'.");
 							ok = false ;
 					} 
 				}

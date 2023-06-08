@@ -1,7 +1,5 @@
-int x ;
-void f(int n){ 
-	if (n == 0) { n = 0 ;}       
-	else { f(0) ;}	
-}
-x = 1 ;
-f(2)
+int a; 
+int b; 
+int c ; 
+c = 2;
+if (true) {a = c; c} else { a = c; c}

@@ -18,6 +18,10 @@ public class FunNode implements Node {
 	private int nesting ;
 	private String flabel ;
 	private String prelabel;
+	private SymbolTable s;
+	private boolean thenrecursive = false;
+	private boolean elserecursive = false;
+	private boolean condrecursive = false;
   
 	public FunNode (String _id, Type _type, ArrayList<ParNode> _parlist, ArrayList<Node> _declist, ArrayList<Node> _stmlist, Node _exp) {
 		id = _id ;
@@ -32,6 +36,7 @@ public class FunNode implements Node {
 
 		ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
 		nesting = _nesting ;
+		s=ST;
 		
 		if (ST.lookup(id) != null)
 			errors.add(new SemanticError("Function Identifier " + id + " already declared"));
@@ -61,6 +66,8 @@ public class FunNode implements Node {
   				errors.addAll(dec.checkSemantics(ST, nesting+1));
 			
 			ST.insert(id, type, nesting, "") ;
+			STentry T = ST.lookup(id);
+			T.setInitialized();
 			
 			for (Node stm : stmlist)
 				errors.addAll(stm.checkSemantics(ST, nesting+1));
@@ -75,6 +82,8 @@ public class FunNode implements Node {
 			flabel = SimpLanlib.freshFunLabel() ;
 			
 			ST.insert(id, type, nesting, flabel) ;
+			T = ST.lookup(id);
+			T.setInitialized();
 			
 		}
 		return errors ; // problemi con la generazione di codice!
@@ -85,10 +94,46 @@ public class FunNode implements Node {
 			for (Node dec:declist)
 				dec.typeCheck();
 		if (stmlist!=null) 
-			for (Node stm:stmlist)
+			for (Node stm:stmlist) {
 				stm.typeCheck();
+				if(stm instanceof IfStmNode) {
+					Node thenNode = ((IfStmNode)stm).getThenBranch();
+					Node elseNode = ((IfStmNode)stm).getElseBranch();
+					Node guardNode = ((IfStmNode)stm).getGuard();
+					
+					
+					
+					if(thenNode instanceof SeqstmNode) {
+						for (Node innerStm:((SeqstmNode)thenNode).getStmList()) {
+							if(innerStm instanceof CallNode) {
+								System.out.println("yeah1");
+								thenrecursive = true;
+								System.out.println(guardNode.typeCheck());
+								System.out.println(condrecursive);
+									 
+							}
+						
+						}
+					
+					}
+					if(elseNode instanceof SeqstmNode) {
+						for (Node innerStm:((SeqstmNode)elseNode).getStmList()) {
+							if(innerStm instanceof CallNode) {
+								System.out.println("yeah2");
+								elserecursive = true;
+								//condrecursive = ((BoolNode)guardNode).getVal();
+							}
+						}
+					}
+				
+					
+				}
+			}
+				
+		
 		if(exp!=null) {
 			Type exp_type = exp.typeCheck();
+			
 				if ( (exp.typeCheck().getClass()).equals(returntype.getClass())) {
     			if(exp_type instanceof BoolType) {
     				return new BoolType();
@@ -168,10 +213,11 @@ public class FunNode implements Node {
 				+ "rsub RA \n" 
     		);
 	    
+	    
 	    System.out.println("LABELLA: "+flabel);
 	    System.out.println("CODICE: "+SimpLanlib.getCode());
 		return 
-				//"push " + prelabel +"\n" +
+				"push " + prelabel +"\n" +
 				"push " + flabel +"\n";	
   }
   

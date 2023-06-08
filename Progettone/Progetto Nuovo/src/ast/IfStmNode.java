@@ -59,12 +59,26 @@ public class IfStmNode implements Node {
   }
   
 	public Type typeCheck() {
+		
 		if (guard.typeCheck() instanceof BoolType) {
 			
-			thenbranch.typeCheck() ;
-			if(elsebranch!=null)
-				elsebranch.typeCheck() ;
-			return null;
+			Type thenstm = thenbranch.typeCheck() ;
+			if(elsebranch!=null) {
+				
+				Type elsestm = elsebranch.typeCheck() ;
+				if (thenstm.getClass().equals(elsestm.getClass()))
+				{
+					return thenstm;
+				}
+				if(!(thenstm instanceof ErrorType) && !(elsestm instanceof ErrorType)) {
+					System.out.println("Type Error: incompatible types in then and else branches");
+				}
+				return new ErrorType();
+				
+			}
+			
+			return thenstm;
+				
 			
 		} else {
 			System.out.println("Type Error: non boolean condition in if");
@@ -90,6 +104,18 @@ public class IfStmNode implements Node {
   			return s+"If\n" + guard.toPrint(s+"  ") + thenbranch.toPrint(s+"  ")  + elsebranch.toPrint(s+"  ") ; 
   		else
   			return s+"If\n" + guard.toPrint(s+"  ") + thenbranch.toPrint(s+"  "); 
+  	}
+  	
+  	public Node getThenBranch() {
+  		return thenbranch;
+  	}
+  	
+  	public Node getElseBranch() {
+  		return elsebranch;
+  	}
+  	
+  	public Node getGuard() {
+  		return guard;
   	}
 	  
 }  

@@ -58,13 +58,15 @@ public class IfExpNode implements Node {
 			Type elseexp = elsebranch.typeCheck() ;
 			if (thenexp.getClass().equals(elseexp.getClass()))
 			{
-				
+			
 				return thenexp;
 			}
         		
 			else {
+				if(!(thenexp instanceof ErrorType) && !(elseexp instanceof ErrorType)) {
+					System.out.println("Type Error: incompatible types in then and else branches");
+				}
 				
-        		System.out.println("Type Error: incompatible types in then and else branches");
         		return new ErrorType() ;	
 			}
 		} else {
@@ -90,5 +92,13 @@ public class IfExpNode implements Node {
   	public String toPrint(String s) {
 	    return s+"If\n" + guard.toPrint(s+"  ") + thenbranch.toPrint(s+"  ")  + elsebranch.toPrint(s+"  ") ; 
 	}
+  	
+  	public Node getThenBranch() {
+  		return thenbranch;
+  	}
+  	
+  	public Node getElseBranch() {
+  		return elsebranch;
+  	}
 	  
 }  

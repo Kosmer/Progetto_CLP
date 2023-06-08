@@ -19,7 +19,7 @@ public class DecNode implements Node {
   		nesting = _nesting ;
         
         if (ST.top_lookup(id) == true) 
-        	errors.add(new SemanticError("Var id " + id + " already declared"));
+        	errors.add(new SemanticError("Var id '" + id + "' already declared"));
         else ST.insert(id, (Type) type, nesting,"") ;
  
         return errors ;
@@ -30,7 +30,7 @@ public class DecNode implements Node {
 		 * Giusto?
 		 */
 		if(type instanceof VoidType) {
-  			System.out.println("Not possible to declare var "+id+ " to type void");
+  			System.out.println("Not possible to declare var '"+id+ "' to type void");
 			return new ErrorType() ;
 		}
 		return new VoidType();

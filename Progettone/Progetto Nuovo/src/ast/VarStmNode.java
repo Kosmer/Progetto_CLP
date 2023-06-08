@@ -27,7 +27,7 @@ public class VarStmNode implements Node {
   		
   		
         if (T == null) 
-        	errors.add(new SemanticError("Var id " + id + " not declared"));
+        	errors.add(new SemanticError("Var id '" + id + "' not declared"));
         
         else {
         	T.setInitialized();
@@ -42,11 +42,16 @@ public class VarStmNode implements Node {
 	}
   
 	public Type typeCheck () {
-		if(exp.typeCheck()instanceof ErrorType) {
+		Type expvar = exp.typeCheck(); 
+		if(expvar instanceof ErrorType) {
+			
 			return new ErrorType() ;
 		}
-		else if (exp.typeCheck().getClass().equals(type.getClass() )) 
-			return null ;
+		else if (expvar.getClass().equals(type.getClass() )) {
+			
+			return new VoidType() ;
+		}
+			
 		else {
 			System.out.println("Type Error: incompatible type of expression for variable "+id) ;
 			return new ErrorType() ;

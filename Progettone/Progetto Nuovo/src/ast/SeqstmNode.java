@@ -26,10 +26,14 @@ public class SeqstmNode implements Node {
 	}
 
 	public Type typeCheck() {
+		Type stmNode = null;
 		if (stmlist!=null) 
-			for (Node stm:stmlist)
-				stm.typeCheck();
-		return null;
+			for (Node stm:stmlist) {
+				stmNode= stm.typeCheck();
+				if (stmNode instanceof ErrorType)
+					return new ErrorType();
+			}
+		return stmNode;
 	}  
   
 	public String codeGeneration() {
@@ -50,6 +54,14 @@ public class SeqstmNode implements Node {
 			  
 		return s+"" + "\n  "
 	   	   +stmlstr;
+	}
+	
+	public int getStmLenght() {
+		return stmlist.size();
+	}
+	
+	public ArrayList<Node> getStmList(){
+		return stmlist;
 	}
 
 }  
