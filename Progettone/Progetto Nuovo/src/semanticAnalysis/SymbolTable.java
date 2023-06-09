@@ -63,8 +63,8 @@ public class SymbolTable {
 		
 	public void addCopyEnv() {
 		
-		this.add(symbol_table.get(symbol_table.size()-1));
-		this.offset.add(offset.get((offset.size()-1)));
+		symbol_table.add(symbol_table.get(symbol_table.size()-1));
+		offset.add(offset.get((offset.size()-1)));
 	}
 	
 	public String toPrint(){

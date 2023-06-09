@@ -13,6 +13,7 @@ public class VarStmNode implements Node {
 	private int nesting;
 	private int id_offset;
 	private int id_nesting;
+	private STentry T;
 	
 	public VarStmNode(String _id, Node _exp) {
 		id = _id ;
@@ -23,20 +24,26 @@ public class VarStmNode implements Node {
    		ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
   		nesting = _nesting ;
         
-  		STentry T = ST.lookup(id);
+  		
+  		T = ST.lookup(id);
   		
   		
         if (T == null) 
         	errors.add(new SemanticError("Var id '" + id + "' not declared"));
         
-        else {
-        	T.setInitialized();
+        errors.addAll(exp.checkSemantics(ST, nesting));
+        
+        if (T!=null){
+        	
+        	//T.setInitialized();
         	id_offset = T.getoffset();
         	id_nesting = T.getnesting();
         	type = T.gettype();
+        	
+        	this.typeCheck(); 	
         }
         
-        errors.addAll(exp.checkSemantics(ST, nesting));
+        
         
         return errors ;
 	}
@@ -47,8 +54,10 @@ public class VarStmNode implements Node {
 			
 			return new ErrorType() ;
 		}
-		else if (expvar.getClass().equals(type.getClass() )) {
+		
+		if (expvar.getClass().equals(type.getClass() )) {
 			
+			T.setInitialized();
 			return new VoidType() ;
 		}
 			
@@ -60,15 +69,18 @@ public class VarStmNode implements Node {
 	}
   
 	public String codeGeneration() {
+	
 		String getAR="";
 		for (int i=0; i < nesting - id_nesting; i++) 
 	    	 getAR += "store T1 0(T1) \n";
-		return exp.codeGeneration() +
+		return //"VARDSTMNODE\n"+
+				exp.codeGeneration() +
 				"move AL T1 \n" +
 				getAR+
 				"subi T1 " + id_offset +"\n" +
 				"load A0 0(T1) \n"+
 				"pushr A0 \n" ;
+				//+"FINE VARSTMNODE\n";
 	}  
     
 	public String toPrint(String s) {

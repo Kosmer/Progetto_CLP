@@ -12,6 +12,7 @@ public class IfExpNode implements Node {
 	private Node guard ;
 	private Node thenbranch ;
 	private Node elsebranch ;
+	private SymbolTable s;
   
 	public IfExpNode (Node _guard, Node _thenbranch, Node _elsebranch) {
     	guard = _guard ;
@@ -22,19 +23,23 @@ public class IfExpNode implements Node {
    @Override
   public ArrayList<SemanticError> checkSemantics(SymbolTable ST, int _nesting) {
 	  ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
+	  s = ST;
+	  SymbolTable S1 = ST.copy();
+	  SymbolTable S2 = ST.copy();
 	  
-	  SymbolTable S1 = new SymbolTable();
-	  S1 = ST.copy();
-	  SymbolTable S2 = new SymbolTable();
-	  S2 = ST.copy();
+	  System.out.println("GIUSTA SYMB" + ST.toPrint());
+
+	  System.out.println("COPIA SYMB" + S1.toPrint());
 	  
-	  
+	  System.out.println(ST.toPrint());
 	  errors.addAll(guard.checkSemantics(ST, _nesting));
 	  errors.addAll(thenbranch.checkSemantics(S1, _nesting));
 	  errors.addAll(elsebranch.checkSemantics(S2, _nesting));
 	  
 	  ArrayList<HashMap<String,STentry>> t1 = S1.getSymbolTable();
 	  ArrayList<HashMap<String,STentry>> t2 = S2.getSymbolTable();
+	  
+	  
 	  
 	  for(HashMap<String, STentry> h:t1) {
 		  for(String key:h.keySet()) {
@@ -56,9 +61,8 @@ public class IfExpNode implements Node {
 			
 			Type thenexp = thenbranch.typeCheck() ;
 			Type elseexp = elsebranch.typeCheck() ;
-			if (thenexp.getClass().equals(elseexp.getClass()))
+			if (thenexp.getClass().equals(elseexp.getClass()) && !(thenexp instanceof ErrorType))
 			{
-			
 				return thenexp;
 			}
         		
@@ -66,7 +70,6 @@ public class IfExpNode implements Node {
 				if(!(thenexp instanceof ErrorType) && !(elseexp instanceof ErrorType)) {
 					System.out.println("Type Error: incompatible types in then and else branches");
 				}
-				
         		return new ErrorType() ;	
 			}
 		} else {
@@ -79,14 +82,16 @@ public class IfExpNode implements Node {
   	public String codeGeneration() {
   		String lthen = SimpLanPluslib.freshLabel(); 
   		String lend = SimpLanPluslib.freshLabel();
-  		return guard.codeGeneration() +
+  		return //"IFEXP NODE:\n"+
+  				guard.codeGeneration() +
 			 "storei T1 1 \n" +
 			 "beq A0 T1 "+ lthen + "\n" +			  
 			 elsebranch.codeGeneration() +
 			 "b " + lend + "\n" +
 			 lthen + ":\n" +
 			 thenbranch.codeGeneration() +
-	         lend + ":\n" ; 
+	         lend + ":\n";
+	         //+"FINE IFEXPNODE\n"; 
   	}
 
   	public String toPrint(String s) {

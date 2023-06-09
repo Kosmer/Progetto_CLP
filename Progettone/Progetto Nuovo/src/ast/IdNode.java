@@ -10,6 +10,8 @@ public class IdNode implements Node {
 	private String id ;
 	private STentry type ;
 	private int nesting ;
+	private SymbolTable s;
+	private STentry se;
   
 	public IdNode (String _id) {
 		id = _id ;
@@ -19,7 +21,7 @@ public class IdNode implements Node {
 		ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
 		nesting = _nesting ;
 		
-		
+		s = ST;
 		STentry st_type = ST.lookup(id) ;
 		if (st_type == null)
 			errors.add(new SemanticError("Id '" + id + "' not declared"));
@@ -47,11 +49,12 @@ public class IdNode implements Node {
 		String getAR="";
 		for (int i=0; i < nesting - type.getnesting(); i++) 
 	    	 getAR += "store T1 0(T1) \n";
-	    return 
+	    return //"IDNODE\n"+
 		       "move AL T1 \n"
 		       + getAR  //risalgo la catena statica
 		       + "subi T1 " + type.getoffset() +"\n" //metto offset sullo stack
-			   + "store A0 0(T1) \n" ; //carico sullo stack il valore all'indirizzo ottenuto
+			   + "store A0 0(T1) \n";
+			   //+"FINE IDNODE\n"; //carico sullo stack il valore all'indirizzo ottenuto
 	}
 
 	public String toPrint(String s) {

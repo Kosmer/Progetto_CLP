@@ -17,11 +17,7 @@ public class FunNode implements Node {
 	private ArrowType type ;
 	private int nesting ;
 	private String flabel ;
-	private String prelabel;
 	private SymbolTable s;
-	private boolean thenrecursive = false;
-	private boolean elserecursive = false;
-	private boolean condrecursive = false;
   
 	public FunNode (String _id, Type _type, ArrayList<ParNode> _parlist, ArrayList<Node> _declist, ArrayList<Node> _stmlist, Node _exp) {
 		id = _id ;
@@ -30,13 +26,13 @@ public class FunNode implements Node {
 		declist = _declist ;
 		stmlist = _stmlist;
 		exp = _exp;
+		
 	}
 
 	public ArrayList<SemanticError> checkSemantics(SymbolTable ST, int _nesting) {
-
+		
 		ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
 		nesting = _nesting ;
-		s=ST;
 		
 		if (ST.lookup(id) != null)
 			errors.add(new SemanticError("Function Identifier " + id + " already declared"));
@@ -61,22 +57,27 @@ public class FunNode implements Node {
 			
 			ST.increaseoffset() ; // aumentiamo di 1 l'offset per far posto al return value
 			
+			
+			
+			for (Node dec : declist)
+			{
+				errors.addAll(dec.checkSemantics(ST, nesting+1));
+			}
+  				
+			
 			flabel = SimpLanPluslib.freshFunLabel() ;
 			ST.insert(id, type, nesting, flabel) ;
 			STentry T = ST.lookup(id);
 			T.setInitialized();
 			
-			for (Node dec : declist)
-  				errors.addAll(dec.checkSemantics(ST, nesting+1));
-			
-			
-			
 			for (Node stm : stmlist)
 				errors.addAll(stm.checkSemantics(ST, nesting+1));
 			
 			
+
 			if(exp!=null)
 				errors.addAll(exp.checkSemantics(ST, nesting+1));
+			
 			
 			
 			ST.remove();
@@ -93,57 +94,27 @@ public class FunNode implements Node {
   
  	public Type typeCheck () {
 		if (declist!=null) 
-			for (Node dec:declist)
-				dec.typeCheck();
-		if (stmlist!=null) 
-			for (Node stm:stmlist) {
-				stm.typeCheck();
-				if(stm instanceof IfStmNode) {
-					Node thenNode = ((IfStmNode)stm).getThenBranch();
-					Node elseNode = ((IfStmNode)stm).getElseBranch();
-					Node guardNode = ((IfStmNode)stm).getGuard();
-					
-					
-					
-					if(thenNode instanceof SeqstmNode) {
-						for (Node innerStm:((SeqstmNode)thenNode).getStmList()) {
-							if(innerStm instanceof CallNode) {
-								System.out.println("yeah1");
-								thenrecursive = true;
-								System.out.println(guardNode.typeCheck());
-								System.out.println(condrecursive);
-									 
-							}
-						
-						}
-					
-					}
-					if(elseNode instanceof SeqstmNode) {
-						for (Node innerStm:((SeqstmNode)elseNode).getStmList()) {
-							if(innerStm instanceof CallNode) {
-								System.out.println("yeah2");
-								elserecursive = true;
-								//condrecursive = ((BoolNode)guardNode).getVal();
-							}
-						}
-					}
-				
-					
-				}
+			for (Node dec:declist){
+				Node dec2 = dec.typeCheck();
+				if (dec2 instanceof ErrorType)
+					return new ErrorType();
 			}
 				
-		
+		if (stmlist!=null) 
+			for (Node stm:stmlist) {
+				Node stm2 = stm.typeCheck();
+				if (stm2 instanceof ErrorType)
+					return new ErrorType();
+			}
+				
 		if(exp!=null) {
+		
 			Type exp_type = exp.typeCheck();
 			
 				if ( (exp.typeCheck().getClass()).equals(returntype.getClass())) {
-    			if(exp_type instanceof BoolType) {
-    				return new BoolType();
-    			}
-    			if(exp_type instanceof IntType) {
-    				return new IntType();
-    			}
-			}
+					return exp_type;
+				}
+				
 		}
 		if(returntype instanceof VoidType && exp==null) {
 			return new VoidType();
@@ -164,7 +135,6 @@ public class FunNode implements Node {
 	    		}
 	    }
 	    
-	    
 	  String stmlCode = "" ;
 	    if (stmlist.size() != 0) {
 	    		for (Node stm:stmlist){
@@ -173,8 +143,6 @@ public class FunNode implements Node {
 	    		}
 	    }
 	  
-	   
-	    
 	    String expCode="";
 	    if(exp!=null)
 	    	expCode+=exp.codeGeneration();
@@ -184,10 +152,13 @@ public class FunNode implements Node {
 	    SimpLanPluslib.putCode(
 	    			flabel + ":\n"
 	    			+ "pushr RA \n"
-	    			+declCode
-	    			+stmlCode
-	    			+expCode
+					//+"INIZIO CODICE DENTRO FUNNODE\n"
+	    			+ declCode
+	    			+ stmlCode
+	    			+ expCode
+	    			//+"FINE CODICE DENTRO FUNNODE\n"
 	    			+ "addi SP " + 	stmlist.size() + "\n"
+	    			
 	    			+ "popr RA \n"
 	    			+ "addi SP " + 	parlist.size() + "\n"
 	    			+ "pop \n"
@@ -196,29 +167,12 @@ public class FunNode implements Node {
 	   				+ "subi AL 1 \n"
 	   				+ "pop \n"	
 					+ "rsub RA \n" 
-
+					//+"FINE FUNNODE\n"
 	    		);
 	    
-	    /*
-	    prelabel = SimpLanPluslib.freshFunLabel() ;
-	    
-	    SimpLanPluslib.putCode(
-    			prelabel + ":\n"
-    			+ "pushr RA \n"
-    			+ "popr RA \n"
-    			+ "addi SP " + 	parlist.size() + "\n"
-    			+ "pop \n"
-    			+ "store FP 0(FP) \n"
-    			+ "move FP AL \n"
-   				+ "subi AL 1 \n"
-   				+ "pop \n"	
-				+ "rsub RA \n" 
-    		);
-	    
-	    */
 	    System.out.println("LABELLA: "+flabel);
 	    System.out.println("CODICE: "+SimpLanPluslib.getCode());
-		return 
+		return 	//"FUNCTIONDECLARATION\n"+
 				//"push " + prelabel +"\n" +
 				"push " + flabel +"\n";	
   }

@@ -1,7 +1,12 @@
-int u ;
-void f(int m, int n){
-	int x ;
-	if (m>n) { u = m+n ;}
-	else {  x = 1 ; u=2; f(m+1,n+1) ; }
+int a;
+int b(int n1) {
+    int c;
+    int a;
+    int d(int n2) {
+        c * n2
+    }
+    a = 3;
+    d(n1) + a
 }
-f(4,5) ; u
+a = 10;
+b(a) + a

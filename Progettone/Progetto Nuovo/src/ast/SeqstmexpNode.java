@@ -35,8 +35,12 @@ public class SeqstmexpNode implements Node {
 			for (Node stm:stmlist) {
 				stmNode= stm.typeCheck();
 				if (stmNode instanceof ErrorType)
+				{
 					return new ErrorType();
+				}
+					
 			}
+		
 		return exp.typeCheck();
 
 		

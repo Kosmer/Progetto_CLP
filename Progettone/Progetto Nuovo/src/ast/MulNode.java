@@ -33,12 +33,14 @@ public class MulNode implements Node {
 	  }
 	  
 	  public String codeGeneration() {
-		  return 		left.codeGeneration()
+		  return //"MULTNODE\n"+	
+				  left.codeGeneration()
 				   + "pushr A0 \n"
 				   + right.codeGeneration()
 				   + "popr T1 \n"
 				   + "mul A0 T1 \n" 
 				   + "popr A0 \n";
+				   //+"FINE MULTNODE\n";
 	  }
 	  
 	  

@@ -67,16 +67,20 @@ public class CallNode implements Node {
 		    	getAR+="store T1 0(T1) \n";
 		  					
 
-		return  "pushr FP \n"			
+		return 	//"CALLNODE\n"+
+				"pushr FP \n"			
 				+ "move SP FP \n"
 				+ "addi FP 1 \n"	
 				+ "move AL T1\n"		
 				+ getAR
-				+ "pushr T1 \n"			
+				+ "pushr T1 \n"
+				//+"PARAMETRI\n"
 				+ parCode 				
+				//+"FINE PARAMETRI\n"
 				+ "move FP AL \n"
 				+ "subi AL 1 \n"
-				+ "jsub " + entry.getlabel() + "\n" ;
+				+ "jsub " + entry.getlabel()+"\n";
+				//+"FINE CALLNODE\n";
   }
 
 	public String toPrint(String s) {  

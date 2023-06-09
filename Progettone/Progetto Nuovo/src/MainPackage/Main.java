@@ -42,7 +42,8 @@ public class Main {
 		//analisi sintattica
 		Token token = lexer.nextToken();
 		List<Token> lexerErrors = new ArrayList<>();
-		
+		Boolean checkType = true;
+		Boolean codegen = true;
 		
 		while (token.getType() != SimpLanPlusLexer.EOF) {
 			if(token.getType() == SimpLanPlusLexer.ERR)
@@ -92,46 +93,52 @@ public class Main {
 					
 			} else {
 				//System.out.println("Visualizing AST...");
-				System.out.println(ast.toPrint(""));
+				//System.out.println(ast.toPrint(""));
 				
-				System.out.println("CheckSemantic ok!");
+				
 				
 				//controllare casting
-				Node type = (Node)ast.typeCheck(); //type-checking bottom-up 
-				if (type instanceof ErrorType)
-					System.out.println("Type checking is WRONG!");
-				else {
-					System.out.println("Type checking ok!");
-					System.out.println("Symbol Table: \n");
-					System.out.println(ST.toPrint());
+				if(checkType) {
+					Node type = (Node)ast.typeCheck(); //type-checking bottom-up 
+					if (type instanceof ErrorType)
+						System.out.println("Type checking is WRONG!");
+					else {
+						System.out.println("CheckSemantic ok!");
+						System.out.println("Type checking ok!");
+						System.out.println("Symbol Table: \n");
+						System.out.println(ST.toPrint());
+						codegen = true;
+					}
+				}
 				
-				
+				if (codegen) {
 				
 				// CODE GENERATION  
-				String code=ast.codeGeneration(); 
-				System.out.println(code);
-				BufferedWriter out = new BufferedWriter(new FileWriter("src\\input.txt"+".asm")); 
-				out.write(code);
-				out.close(); 
-				System.out.println("Code generated! Assembling and running generated code.");
-
-				String input2 = new String(Files.readAllBytes(Paths.get("src\\input.txt.asm")));
-				CharStream inputASM = CharStreams.fromString(input2);
-				SVMLexer lexerASM = new SVMLexer(inputASM);
-				CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
-				SVMParser parserASM = new SVMParser(tokensASM);
-
-				//parserASM.assembly();
-
-				SVMVisitorImpl visitorSVM = new SVMVisitorImpl();
-				visitorSVM.visit(parserASM.assembly()); 
-
-				//System.out.println("You had: "+lexerASM.lexicalErrors+" lexical errors and "+parserASM.getNumberOfSyntaxErrors()+" syntax errors.");
-				//if (lexerASM.lexicalErrors>0 || parserASM.getNumberOfSyntaxErrors()>0) System.exit(1);
-
-				System.out.println("Starting Virtual Machine...");
-				ExecuteVM vm = new ExecuteVM(visitorSVM.code);
-				vm.cpu();
+				
+					String code=ast.codeGeneration(); 
+					System.out.println(code);
+					BufferedWriter out = new BufferedWriter(new FileWriter("src\\input.txt"+".asm")); 
+					out.write(code);
+					out.close(); 
+					System.out.println("Code generated! Assembling and running generated code.");
+				
+					String input2 = new String(Files.readAllBytes(Paths.get("src\\input.txt.asm")));
+					CharStream inputASM = CharStreams.fromString(input2);
+					SVMLexer lexerASM = new SVMLexer(inputASM);
+					CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
+					SVMParser parserASM = new SVMParser(tokensASM);
+	
+					//parserASM.assembly();
+	
+					SVMVisitorImpl visitorSVM = new SVMVisitorImpl();
+					visitorSVM.visit(parserASM.assembly()); 
+	
+					//System.out.println("You had: "+lexerASM.lexicalErrors+" lexical errors and "+parserASM.getNumberOfSyntaxErrors()+" syntax errors.");
+					//if (lexerASM.lexicalErrors>0 || parserASM.getNumberOfSyntaxErrors()>0) System.exit(1);
+	
+					System.out.println("Starting Virtual Machine...");
+					ExecuteVM vm = new ExecuteVM(visitorSVM.code);
+					vm.cpu();
 					
 				}
 				

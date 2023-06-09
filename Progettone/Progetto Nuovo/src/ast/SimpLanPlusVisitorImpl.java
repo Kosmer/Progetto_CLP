@@ -92,6 +92,7 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 		
 		if(ctx.body() != null){
 			if(ctx.body().dec()!=null) {
+				System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFf");
 				for(DecContext dc : ctx.body().dec())
 					innerDec.add(visit(dc));
 			}

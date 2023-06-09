@@ -61,10 +61,12 @@ public class IfStmNode implements Node {
 			
 			Type thenstm = thenbranch.typeCheck() ;
 			if(elsebranch!=null) {
-				
+				//System.out.println("ELSE NON NULLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO\n");
 				Type elsestm = elsebranch.typeCheck() ;
-				if (thenstm.getClass().equals(elsestm.getClass()))
+				//System.out.println("ELSE :"+elsestm.getClass()+"\n");
+				if (thenstm.getClass().equals(elsestm.getClass()  ) && !(thenstm instanceof ErrorType))
 				{
+					//System.out.println("ELSE :"+elsestm.getClass()+"\n");
 					return thenstm;
 				}
 				if(!(thenstm instanceof ErrorType) && !(elsestm instanceof ErrorType)) {
@@ -86,7 +88,8 @@ public class IfStmNode implements Node {
   	public String codeGeneration() {
   		String lthen = SimpLanPluslib.freshLabel(); 
   		String lend = SimpLanPluslib.freshLabel();
-  		return guard.codeGeneration() +
+  		return //"IFSTMNODE\n"+
+  				guard.codeGeneration() +
 			 "storei T1 1 \n" +
 			 "beq A0 T1 "+ lthen + "\n" +			  
 			 elsebranch.codeGeneration() +
@@ -94,6 +97,7 @@ public class IfStmNode implements Node {
 			 lthen + ":\n" +
 			 thenbranch.codeGeneration() +
 	         lend + ":\n" ; 
+  			//+"FINE IFSTMNODE\n";
   	}
 
   	public String toPrint(String s) {
