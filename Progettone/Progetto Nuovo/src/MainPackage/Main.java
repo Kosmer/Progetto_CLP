@@ -26,15 +26,36 @@ import parser.SimpLanPlusVisitor;
 import semanticAnalysis.SymbolTable;
 import semanticAnalysis.SemanticError;
 
-
+//							COME AVVIARE
+//		Aprire un terminale dentro la cartella 'Progetto' e digitare il comando:
+//			java -jar .\SimpLanPlus.jar 1 1
+//		i due interi servono rispettivamente per attivare (1) o disattivare (0) le fasi di TypeChecking e quella di Codegen.
+//		Questa scelta è stata presa per avviare correttamente gli esempi dell'esercizio 4, che altrimenti si sarebbero bloccati
+//		al typechecking senza eseguire la codegen.
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 		
+		if(args.length!=2) {
+			System.out.println("The parameters must be 2.");
+			return;
+		}
 		
-		String inputfile = "src\\input.txt";
-		String outputfile = "src\\syntax_errors.txt";
+		String inputfile = "src\\InputOutput\\input.txt";
+		System.out.println(args[0]);
+		String outputfile = "src\\InputOutput\\syntax_errors.txt";
+		
+		Boolean checkType = false;
+		Boolean codegen = false;
+				
+		if(args[0].equals("1")) {
+			checkType = true;
+		}
+			
+		if(args[1].equals("1"))
+			codegen = true;
+		
 		
 		//es 1
 		String input = new String(Files.readAllBytes(Paths.get(inputfile)));
@@ -45,8 +66,7 @@ public class Main {
 		//analisi sintattica
 		Token token = lexer.nextToken();
 		List<Token> lexerErrors = new ArrayList<>();
-		Boolean checkType = true;
-		Boolean codegen = true;
+		
 		
 		while (token.getType() != SimpLanPlusLexer.EOF) {
 			if(token.getType() == SimpLanPlusLexer.ERR)
@@ -109,7 +129,6 @@ public class Main {
 						System.out.println("CheckSemantic ok!");
 						System.out.println("Type checking ok!\n");
 						System.out.println("Symbol Table: \n" + ST.toPrint());
-						//codegen = true;
 					}
 				}
 				
