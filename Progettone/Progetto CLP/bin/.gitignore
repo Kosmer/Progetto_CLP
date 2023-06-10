@@ -1,6 +1,7 @@
+/InputOutput/
+/MainPackage/
 /ast/
 /evaluator/
+/input.txt.asm
 /parser/
 /semanticAnalysis/
-/MainPackage/
-/InputOutput/

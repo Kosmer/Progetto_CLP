@@ -42,9 +42,9 @@ public class Main {
 			return;
 		}
 		
-		String inputfile = "src\\InputOutput\\input.txt";
+		String inputfile = "./src/InputOutput/input.txt";
 		
-		String outputfile = "src\\InputOutput\\syntax_errors.txt";
+		String outputfile = "./src/InputOutput/syntax_errors.txt";
 		
 		Boolean checkType = false;
 		Boolean codegen = false;
