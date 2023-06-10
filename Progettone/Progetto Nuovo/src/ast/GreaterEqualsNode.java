@@ -28,7 +28,7 @@ public class GreaterEqualsNode implements Node {
 		  if ((left.typeCheck() instanceof IntType) && (right.typeCheck() instanceof IntType) ) 
 			  return new BoolType() ;
 		  else {
-			  System.out.println("Type Error: Non integers in addition") ;
+			  System.out.println("Type Error: Non integers in Greater-Equals compare") ;
 			  return new ErrorType() ;
 		  }
 	}  

@@ -1,7 +1,9 @@
-int x ;
-void f(int n){ 
-	if (n == 0) { n = 0 ; }       // n e` gia` uguale a 0; equivale a fare skip
-	else { x = x * n ; f(n-1) ; }	
+int u ;
+int f(int n){ 
+        int y ;
+	y = 1 ;
+	if (n == 0) { y }
+	else { y = f(n-1) ; y*n }	
 }
-x = 1 ;
-f(10) 
+u = 6 ;
+f(u)

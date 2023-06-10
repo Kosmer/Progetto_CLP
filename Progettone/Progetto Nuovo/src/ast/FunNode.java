@@ -17,7 +17,6 @@ public class FunNode implements Node {
 	private ArrowType type ;
 	private int nesting ;
 	private String flabel ;
-	private SymbolTable s;
   
 	public FunNode (String _id, Type _type, ArrayList<ParNode> _parlist, ArrayList<Node> _declist, ArrayList<Node> _stmlist, Node _exp) {
 		id = _id ;
@@ -41,10 +40,7 @@ public class FunNode implements Node {
 			ArrayList<Type> partypes = new ArrayList<Type>() ;
 		
 			ST.add(HM);
-			//ST.addCopyEnv();
 			
-			
-			System.out.println("Sto dichiarando " + id +", Tabella: " + ST.toPrint());
 			
 			for (ParNode arg : parlist){
     	  			partypes.add(arg.getType());
@@ -75,16 +71,11 @@ public class FunNode implements Node {
 			for (Node stm : stmlist)
 				errors.addAll(stm.checkSemantics(ST, nesting+1));
 			
-			System.out.println("TABELLA A META" + ST.toPrint());
-
 			if(exp!=null)
 				errors.addAll(exp.checkSemantics(ST, nesting+1));
 			
 			
-			
 			ST.remove();
-			
-			
 			
 			ST.insert(id, type, nesting, flabel) ;
 			T = ST.lookup(id);
@@ -154,11 +145,9 @@ public class FunNode implements Node {
 	    SimpLanPluslib.putCode(
 	    			flabel + ":\n"
 	    			+ "pushr RA \n"
-					//+"INIZIO CODICE DENTRO FUNNODE\n"
 	    			+ declCode
 	    			+ stmlCode
 	    			+ expCode
-	    			//+"FINE CODICE DENTRO FUNNODE\n"
 	    			+ "addi SP " + 	declist.size() + "\n"
 	    			+ "popr RA \n"
 	    			+ "addi SP " + 	parlist.size() + "\n"
@@ -167,18 +156,10 @@ public class FunNode implements Node {
 	    			+ "move FP AL \n"
 	   				+ "subi AL 1 \n"
 	   				+ "pop \n"	
-					+ "rsub RA \n" 
-					//+"FINE FUNNODE\n"
+					+ "rsub RA \n"
 	    		);
 	    
-	    System.out.println("LABELLA: "+flabel);
-	    System.out.println("CODICE: "+SimpLanPluslib.getCode());
-		return 	//"FUNCTIONDECLARATION\n"+
-				/*"storei T1 1 \n" +
-				"sub SP T1 \n" +
-				"popr SP \n" +*/
-				//"subi SP 1 \n"+
-				"push " + flabel +"\n";	
+		return 	"push " + flabel +"\n";	
   }
   
   

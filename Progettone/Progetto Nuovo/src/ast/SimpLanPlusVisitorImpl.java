@@ -41,12 +41,12 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 
 
 	@Override
-	public Node visitSingleExp(SingleExpContext ctx) {
+	public Node visitSingleExp(SingleExpContext ctx) {			//Prog1: singleExp
 		return new Prog1Node(visit(ctx.exp()));
 	}
 
 	@Override
-	public Node visitDecstmExp(DecstmExpContext ctx) {
+	public Node visitDecstmExp(DecstmExpContext ctx) {			//Prog2: decstmExp
 		
 		ArrayList<Node> decList = new ArrayList<Node>();
 		ArrayList<Node> stmList = new ArrayList<Node>();
@@ -67,17 +67,17 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 	}
 
 	@Override
-	public Node visitIdDec(IdDecContext ctx) {
+	public Node visitIdDec(IdDecContext ctx) {					//Dec: idDec
 		//visit the type
 		Node typeNode = visit(ctx.type());
 		
 						
-		//build the varNode
+		
 		return new DecNode(ctx.ID().getText(), typeNode);
 	}
 
 	@Override
-	public Node visitFunDec(FunDecContext ctx) {
+	public Node visitFunDec(FunDecContext ctx) {				//FunNode:   funDec
 		
 		ArrayList<ParNode> _param = new ArrayList<ParNode>() ;
 				
@@ -92,7 +92,6 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 		
 		if(ctx.body() != null){
 			if(ctx.body().dec()!=null) {
-				System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFf");
 				for(DecContext dc : ctx.body().dec())
 					innerDec.add(visit(dc));
 			}
@@ -116,12 +115,11 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 
 	@Override
 	public Node visitBody(BodyContext ctx) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Node visitType(TypeContext ctx) {
+	public Node visitType(TypeContext ctx) {			//type
 		if(ctx.getText().equals("int"))
 			return new IntType();
 		else if(ctx.getText().equals("bool"))
@@ -130,18 +128,16 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 	}
 
 	@Override
-	public Node visitVarStm(VarStmContext ctx) {
+	public Node visitVarStm(VarStmContext ctx) {			//VarStm: assegnamento
 		//visit the exp
 		Node expNode = visit(ctx.exp());
 		
-		//build the varNode
+		
 		return new VarStmNode(ctx.ID().getText(), expNode);
 	}
 
 	@Override
-	public Node visitFunStm(FunStmContext ctx) {
-		//this corresponds to a function invocation
-		//declare the result
+	public Node visitFunStm(FunStmContext ctx) {			//Chiamata di funzione: 		
 		Node res;
 		
 		//get the invocation arguments
@@ -150,19 +146,19 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 		for (ExpContext exp : ctx.exp())
 			args.add(visit(exp));
 		
-		// this is ad-hoc for this project...
+		
 		if(ctx.ID().getText().equals("print"))
 			res = new PrintNode(args.get(0));
 		
 		else
-			//instantiate the invocation
+		
 			res = new CallNode(ctx.ID().getText(), args);
 		
 		return res;
 	}
 
 	@Override
-	public Node visitIfStm(IfStmContext ctx) {
+	public Node visitIfStm(IfStmContext ctx) {				//ifStm
 		Node condStm = visit (ctx.cond);
 		
 		Node thenStm = visit (ctx.thenBranch);
@@ -175,31 +171,31 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 	}
 
 	@Override
-	public Node visitMuldivExp(MuldivExpContext ctx) {
+	public Node visitMuldivExp(MuldivExpContext ctx) {					//moltiplicazione
 		if (ctx.mul != null)
 			return new MulNode(visit(ctx.left), visit(ctx.right));
 		else return new DivNode(visit(ctx.left), visit(ctx.right));
 	}
 
 	@Override
-	public Node visitAddsubExp(AddsubExpContext ctx) {
+	public Node visitAddsubExp(AddsubExpContext ctx) {					//addizione e sottrazione
 		if (ctx.plus != null)
 			return new PlusNode(visit(ctx.left), visit(ctx.right));
 		else return new MinusNode(visit(ctx.left), visit(ctx.right));
 	}
 
 	@Override
-	public Node visitCompareExp(CompareExpContext ctx) {
-		if(ctx.greater_equals != null){ //it is a simple expression
+	public Node visitCompareExp(CompareExpContext ctx) {				//Confronti: ==,<=,<,>,>=
+		if(ctx.greater_equals != null){ 
 			return new GreaterEqualsNode(visit(ctx.left), visit(ctx.right));
 		}
-		else if(ctx.lesser_equals != null){ //it is a binary expression, you should visit left and right
+		else if(ctx.lesser_equals != null){ 
 			return new LesserEqualsNode(visit(ctx.left), visit(ctx.right));
 		}
-		else if(ctx.greater!= null){ //it is a binary expression, you should visit left and right
+		else if(ctx.greater!= null){
 			return new GreaterNode(visit(ctx.left), visit(ctx.right));
 		}
-		else if(ctx.lesser!=null){ //it is a binary expression, you should visit left and right
+		else if(ctx.lesser!=null){
 			return new LesserNode(visit(ctx.left), visit(ctx.right));
 		}
 		else
@@ -207,29 +203,29 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 	}
 
 	@Override
-	public Node visitVarExp(VarExpContext ctx) {
+	public Node visitVarExp(VarExpContext ctx) {						//id: varExp
 		return new IdNode(ctx.ID().getText());
 	}
 
 	@Override
-	public Node visitTrueExp(TrueExpContext ctx) {
+	public Node visitTrueExp(TrueExpContext ctx) {						//trueExp
 		return new BoolNode(Boolean.parseBoolean("true"));
 	}
 
 	@Override
-	public Node visitBaseExp(BaseExpContext ctx) {
+	public Node visitBaseExp(BaseExpContext ctx) {						//baseExp
 		return visit (ctx.exp());
 	}
 
 	@Override
-	public Node visitAndorExp(AndorExpContext ctx) {
+	public Node visitAndorExp(AndorExpContext ctx) {					//AndOr
 		if (ctx.and != null)
 			return new AndNode(visit(ctx.left), visit(ctx.right));
 		else return new OrNode(visit(ctx.left), visit(ctx.right));
 	}
 
 	@Override
-	public Node visitIfExp(IfExpContext ctx) {
+	public Node visitIfExp(IfExpContext ctx) {					//IfExp
 		Node condExp = visit (ctx.cond);
 		
 		Node thenExp = visit (ctx.thenBranch);
@@ -240,12 +236,12 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 	}
 
 	@Override
-	public Node visitFalseExp(FalseExpContext ctx) {
+	public Node visitFalseExp(FalseExpContext ctx) {				//FalseExp
 		return new BoolNode(Boolean.parseBoolean("false"));
 	}
 
 	@Override
-	public Node visitFunExp(FunExpContext ctx) {
+	public Node visitFunExp(FunExpContext ctx) {				//Chiamata di funzione: FunExp
 		Node res;
 		
 		//get the invocation arguments
@@ -258,29 +254,29 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 		}
 			
 		
-		// this is ad-hoc for this project...
+		
 		if(ctx.ID().getText().equals("print"))
 			res = new PrintNode(args.get(0));
 		
 		else
-			//instantiate the invocation
+			
 			res = new CallNode(ctx.ID().getText(), args);
 		
 		return res;
 	}
 
 	@Override
-	public Node visitNotExp(NotExpContext ctx) {
+	public Node visitNotExp(NotExpContext ctx) {				//Not
 		return new NotNode(visit(ctx.exp()));	
 	}
 
 	@Override
-	public Node visitIntExp(IntExpContext ctx) {
+	public Node visitIntExp(IntExpContext ctx) {								//intExp
 		return new IntNode(Integer.parseInt(ctx.INTEGER().getText()));
 	}
 
 	@Override
-	public Node visitBlockseqstm(BlockseqstmContext ctx) {
+	public Node visitBlockseqstm(BlockseqstmContext ctx) {					//Blocco rami dell'ifStm
 		ArrayList<Node> stmList = new ArrayList<Node>();
 		for (StmContext sc : ctx.stm())
 			stmList.add(visit(sc));
@@ -290,7 +286,7 @@ public class SimpLanPlusVisitorImpl extends SimpLanPlusBaseVisitor<Node> {
 	
 
 	@Override
-	public Node visitBlockseqstmexp(BlockseqstmexpContext ctx) {
+	public Node visitBlockseqstmexp(BlockseqstmexpContext ctx) {			//Blocco rami dell'ifExp
 		ArrayList<Node> stmList = new ArrayList<Node>();
 		Node expNode = null;
 		

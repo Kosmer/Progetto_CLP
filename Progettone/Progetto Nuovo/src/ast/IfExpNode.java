@@ -12,7 +12,6 @@ public class IfExpNode implements Node {
 	private Node guard ;
 	private Node thenbranch ;
 	private Node elsebranch ;
-	private SymbolTable s;
   
 	public IfExpNode (Node _guard, Node _thenbranch, Node _elsebranch) {
     	guard = _guard ;
@@ -23,15 +22,9 @@ public class IfExpNode implements Node {
    @Override
   public ArrayList<SemanticError> checkSemantics(SymbolTable ST, int _nesting) {
 	  ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
-	  s = ST;
 	  SymbolTable S1 = ST.copy();
 	  SymbolTable S2 = ST.copy();
-	  
-	  System.out.println("GIUSTA SYMB" + ST.toPrint());
-
-	  System.out.println("COPIA SYMB" + S1.toPrint());
-	  
-	  
+	   
 	  errors.addAll(guard.checkSemantics(ST, _nesting));
 	  errors.addAll(thenbranch.checkSemantics(S1, _nesting));
 	  errors.addAll(elsebranch.checkSemantics(S2, _nesting));
@@ -39,8 +32,7 @@ public class IfExpNode implements Node {
 	  ArrayList<HashMap<String,STentry>> t1 = S1.getSymbolTable();
 	  ArrayList<HashMap<String,STentry>> t2 = S2.getSymbolTable();
 	  
-	  
-	  
+	//se nei rami thene else viene inizializzata una variabile allora anche nell'ambiente finale viene inizializzata
 	  for(HashMap<String, STentry> h:t1) {
 		  for(String key:h.keySet()) {
 			  STentry e = ST.lookup(key);
@@ -82,8 +74,8 @@ public class IfExpNode implements Node {
   	public String codeGeneration() {
   		String lthen = SimpLanPluslib.freshLabel(); 
   		String lend = SimpLanPluslib.freshLabel();
-  		return //"IFEXP NODE:\n"+
-  				guard.codeGeneration() +
+  		return 
+  			guard.codeGeneration() +
 			 "storei T1 1 \n" +
 			 "beq A0 T1 "+ lthen + "\n" +			  
 			 elsebranch.codeGeneration() +
@@ -91,7 +83,6 @@ public class IfExpNode implements Node {
 			 lthen + ":\n" +
 			 thenbranch.codeGeneration() +
 	         lend + ":\n";
-	         //+"FINE IFEXPNODE\n"; 
   	}
 
   	public String toPrint(String s) {

@@ -39,10 +39,7 @@ public class DecNode implements Node {
 	}
   
 	public String codeGeneration() {
-		return /*"storei T1 1 \n" +
-				"sub SP T1 \n" +
-				"pop \n" ;*/
-				"subi SP 1 \n";		
+		return "subi SP 1 \n";		
 	}  
 	public String toPrint(String s) {
 		return "  "+ s + "DecVar:" + id + type.toPrint(" ") + "\n"; 

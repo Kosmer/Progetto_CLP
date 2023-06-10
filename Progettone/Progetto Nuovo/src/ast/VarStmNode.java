@@ -34,12 +34,12 @@ public class VarStmNode implements Node {
         errors.addAll(exp.checkSemantics(ST, nesting));
         
         if (T!=null){
-        	
-        	//T.setInitialized();
+        	    	
         	id_offset = T.getoffset();
         	id_nesting = T.getnesting();
         	type = T.gettype();
         	
+        	//Ad-hoc per l'assegnamento! Caso particolare nell'if da gestire così a causa di copia SymbolTable
         	this.typeCheck(); 	
         }
         
@@ -73,20 +73,19 @@ public class VarStmNode implements Node {
 		String getAR="";
 		for (int i=0; i < nesting - id_nesting; i++) 
 	    	 getAR += "store T1 0(T1) \n";
-		return //"VARDSTMNODE\n"+
+		return 
 				exp.codeGeneration() +
 				"move AL T1 \n" +
 				getAR +
 				"subi T1 " + (id_offset)+"\n" +
 				"load A0 0(T1) \n";
 				//"pushr A0 \n" ;
-				//+"FINE VARSTMNODE\n";
 	}  
     
 	public String toPrint(String s) {
 		
         
-		return s + "StmVar:" + id + type.toPrint(" ") + "\n" + exp.toPrint(s+"\t"); 
+		return s + "AsgVar:" + id + type.toPrint(" ") + "\n" + exp.toPrint(s+"\t"); 
 	}
 
 }  

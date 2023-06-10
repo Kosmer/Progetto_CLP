@@ -26,7 +26,7 @@ public class CallNode implements Node {
 				for (Node par : parameters)
 					 errors.addAll(par.checkSemantics(ST, nesting));
 		} else {
-			 	errors.add(new SemanticError("Id '" + id + "' not declared")) ;
+			 	errors.add(new SemanticError("Fun '" + id + "' not declared")) ;
 		}
 		return errors;
   }
@@ -67,20 +67,16 @@ public class CallNode implements Node {
 		    	getAR+="store T1 0(T1) \n";
 		  					
 
-		return 	//"CALLNODE\n"+
-				"pushr FP \n"			
+		return 	"pushr FP \n"			
 				+ "move SP FP \n"
 				+ "addi FP 1 \n"	
 				+ "move AL T1\n"		
-				+ getAR
+				+ getAR							//accedo al corretto livello di nesting
 				+ "pushr T1 \n"
-				//+"PARAMETRI\n"
-				+ parCode 				
-				//+"FINE PARAMETRI\n"
+				+ parCode 						//codegen dei parametri	
 				+ "move FP AL \n"
 				+ "subi AL 1 \n"
 				+ "jsub " + entry.getlabel()+"\n";
-				//+"FINE CALLNODE\n";
   }
 
 	public String toPrint(String s) {  

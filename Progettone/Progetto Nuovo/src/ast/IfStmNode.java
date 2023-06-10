@@ -23,12 +23,10 @@ public class IfStmNode implements Node {
   public ArrayList<SemanticError> checkSemantics(SymbolTable ST, int _nesting) {
 	  ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
 	  
-	  SymbolTable S1 = new SymbolTable();
-	  S1 = ST.copy();
-	  SymbolTable S2 = new SymbolTable();
-	  S2 = ST.copy();
+	  SymbolTable S1 = ST.copy();	  
+	  SymbolTable S2 = ST.copy();
 	  
-
+	 
 	  errors.addAll(guard.checkSemantics(ST, _nesting));
 	  errors.addAll(thenbranch.checkSemantics(S1, _nesting));
 	  if(elsebranch!=null)
@@ -61,12 +59,9 @@ public class IfStmNode implements Node {
 			
 			Type thenstm = thenbranch.typeCheck() ;
 			if(elsebranch!=null) {
-				//System.out.println("ELSE NON NULLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO\n");
 				Type elsestm = elsebranch.typeCheck() ;
-				//System.out.println("ELSE :"+elsestm.getClass()+"\n");
 				if (thenstm.getClass().equals(elsestm.getClass()  ) && !(thenstm instanceof ErrorType))
 				{
-					//System.out.println("ELSE :"+elsestm.getClass()+"\n");
 					return thenstm;
 				}
 				if(!(thenstm instanceof ErrorType) && !(elsestm instanceof ErrorType)) {
@@ -88,8 +83,8 @@ public class IfStmNode implements Node {
   	public String codeGeneration() {
   		String lthen = SimpLanPluslib.freshLabel(); 
   		String lend = SimpLanPluslib.freshLabel();
-  		return //"IFSTMNODE\n"+
-  				guard.codeGeneration() +
+  		return 
+  			guard.codeGeneration() +
 			 "storei T1 1 \n" +
 			 "beq A0 T1 "+ lthen + "\n" +			  
 			 elsebranch.codeGeneration() +
@@ -97,7 +92,6 @@ public class IfStmNode implements Node {
 			 lthen + ":\n" +
 			 thenbranch.codeGeneration() +
 	         lend + ":\n" ; 
-  			//+"FINE IFSTMNODE\n";
   	}
 
   	public String toPrint(String s) {

@@ -31,7 +31,7 @@ import semanticAnalysis.SemanticError;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
+		
 		
 		//es 1
 		String input = new String(Files.readAllBytes(Paths.get("src\\input.txt")));
@@ -49,7 +49,7 @@ public class Main {
 			if(token.getType() == SimpLanPlusLexer.ERR)
 				lexerErrors.add(token);
 			token = lexer.nextToken();
-			//System.out.println(token.getText()+" con ID "+token.getType());
+			
 		}
 		
 		File f = new File("src\\lexical_errors.txt");
@@ -97,7 +97,7 @@ public class Main {
 				
 				
 				
-				//controllare casting
+				//controllo se voglio fare TypeChecking o no (esercizi punto 4 lo bypassano)
 				if(checkType) {
 					Node type = (Node)ast.typeCheck(); //type-checking bottom-up 
 					if (type instanceof ErrorType)
@@ -107,10 +107,11 @@ public class Main {
 						System.out.println("Type checking ok!");
 						System.out.println("Symbol Table: \n");
 						System.out.println(ST.toPrint());
-						//codegen = true;
+						codegen = true;
 					}
 				}
 				
+				//controllo se voglio fare CodeGen o no (esercizi punti 1-2-3 non la richiedono)
 				if (codegen) {
 				
 				// CODE GENERATION  
@@ -133,9 +134,7 @@ public class Main {
 					SVMVisitorImpl visitorSVM = new SVMVisitorImpl();
 					visitorSVM.visit(parserASM.assembly()); 
 	
-					//System.out.println("You had: "+lexerASM.lexicalErrors+" lexical errors and "+parserASM.getNumberOfSyntaxErrors()+" syntax errors.");
-					//if (lexerASM.lexicalErrors>0 || parserASM.getNumberOfSyntaxErrors()>0) System.exit(1);
-	
+					
 					System.out.println("Starting Virtual Machine...");
 					ExecuteVM vm = new ExecuteVM(visitorSVM.code);
 					vm.cpu();

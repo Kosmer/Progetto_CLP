@@ -47,7 +47,6 @@ public class Prog2Node implements Node {
 					return new ErrorType();
 				}
 			}
-				
 					
 		if (exp!=null)
 			if (exp.typeCheck() instanceof ErrorType) {

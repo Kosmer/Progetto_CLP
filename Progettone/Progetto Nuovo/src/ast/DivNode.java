@@ -34,7 +34,7 @@ public class DivNode implements Node {
 	  
 	  
 	  public String codeGeneration() {
-		  return 		left.codeGeneration()
+		  return 	left.codeGeneration()
 				   + "pushr A0 \n" 
 				   + right.codeGeneration()
 				   + "popr T1 \n" 

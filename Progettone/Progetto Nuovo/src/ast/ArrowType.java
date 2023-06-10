@@ -11,11 +11,11 @@ public class ArrowType extends Type {
 	    outputtype = _outputtype;
 	}
 
-	public Type get_outputtype () { //
+	public Type get_outputtype () { 
 		return outputtype;
 	}
 		  
-	public ArrayList<Type> get_inputtype() { //
+	public ArrayList<Type> get_inputtype() { 
 		return inputtype ;
 	}
 	

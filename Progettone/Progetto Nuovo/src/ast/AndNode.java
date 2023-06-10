@@ -30,11 +30,10 @@ public class AndNode implements Node {
 		  if ((left.typeCheck() instanceof BoolType) && (right.typeCheck() instanceof BoolType) ) 
 			  return new BoolType() ;
 		  else {
-			  System.out.println("Type Error: Non boolean in addition") ;
+			  System.out.println("Type Error: Non boolean in AND compare") ;
 			  return new ErrorType() ;
 		  }
 	}  
-	  
   
 	public String codeGeneration() {
 		String lexit = SimpLanPluslib.freshLabel();

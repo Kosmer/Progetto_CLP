@@ -23,15 +23,6 @@ public class SymbolTable {
 		return symbol_table.size() -1 ;
 	}
 	
-	/*
-	public SymbolTable copy() {
-		SymbolTable S = new SymbolTable() ;
-		for (HashMap h:symbol_table) {
-			S.add(h);
-		}
-		return S;
-	}
-	*/
 	
 	//torna una copia della SymbolTable
 	public SymbolTable copy() {
@@ -84,7 +75,7 @@ public class SymbolTable {
 
             return res;
     }
-	//public SymbolTable newScope(SymbolTable st) {}
+	
 	
 	public void add(HashMap<String,STentry> H) {
 		symbol_table.add(H) ;
