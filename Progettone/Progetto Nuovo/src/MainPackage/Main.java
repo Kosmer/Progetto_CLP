@@ -34,6 +34,7 @@ public class Main {
 		
 		
 		String inputfile = "src\\input.txt";
+		String outputfile = "src\\syntax_errors.txt";
 		
 		//es 1
 		String input = new String(Files.readAllBytes(Paths.get(inputfile)));
@@ -45,7 +46,7 @@ public class Main {
 		Token token = lexer.nextToken();
 		List<Token> lexerErrors = new ArrayList<>();
 		Boolean checkType = true;
-		Boolean codegen = false;
+		Boolean codegen = true;
 		
 		while (token.getType() != SimpLanPlusLexer.EOF) {
 			if(token.getType() == SimpLanPlusLexer.ERR)
@@ -54,7 +55,7 @@ public class Main {
 			
 		}
 		
-		File f = new File("src\\lexical_errors.txt");
+		File f = new File(outputfile);
 		if(!f.exists()) {
 			f.createNewFile();
 		} else {
@@ -64,14 +65,14 @@ public class Main {
 
 		if (lexerErrors.size() > 0){
 			//se ci sono stati errori di sintassi
-			System.out.println("Ci sono: " + lexerErrors.size() + " errori lessicali.\n");
+			System.out.println("There are " + lexerErrors.size() + " syntax errors. Errors are listed in syntax_errors.txt \n");
 			//prende la lista dei simboli che non rientrano nella grammatica e li inserisce nel file di output
 			for (int i=0;i<lexerErrors.size();i++) {
 				int errLine = lexerErrors.get(i).getLine();
 				String errStr = lexerErrors.get(i).getText();
 				int errPos = lexerErrors.get(i).getCharPositionInLine() + 1;
-				String toWrite = "[!] Errore in riga "+errLine+" carattere "+errPos+", simbolo \"" + errStr + "\" non riconosciuto.\n";
-				Files.write(Paths.get("src\\lexical_errors.txt"), toWrite.getBytes(), StandardOpenOption.APPEND);
+				String toWrite = "[!] Error in line "+errLine+" character "+errPos+", symbol \"" + errStr + "\" not recognized.\n";
+				Files.write(Paths.get(outputfile), toWrite.getBytes(), StandardOpenOption.APPEND);
 			}
 		} else {
 			

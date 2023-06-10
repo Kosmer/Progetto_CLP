@@ -6,3 +6,4 @@
 /parser/
 /semanticAnalysis/
 /input.txt.asm
+/syntax_errors.txt
