@@ -1,9 +1,13 @@
-int u ;
-int f(int n){ 
-        int y ;
-	y = 1 ;
-	if (n == 0) { y }
-	else { y = f(n-1) ; y*n }	
+int a;
+int b(int n) {
+    int c;
+    int a;
+    int d(int n) {
+        c = 1;
+        c * n
+    }
+    a = 3;
+    d(n) + a
 }
-u = 6 ;
-f(u)
+a = 10;
+b(a) + a

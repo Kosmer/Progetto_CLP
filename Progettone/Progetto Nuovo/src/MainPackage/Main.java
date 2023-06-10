@@ -33,8 +33,10 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		
 		
+		String inputfile = "src\\input.txt";
+		
 		//es 1
-		String input = new String(Files.readAllBytes(Paths.get("src\\input.txt")));
+		String input = new String(Files.readAllBytes(Paths.get(inputfile)));
 		CharStream stream = CharStreams.fromString(input);
 		SimpLanPlusLexer lexer = new SimpLanPlusLexer(stream);
 		CommonTokenStream tokenStream = new CommonTokenStream(lexer);	
@@ -104,9 +106,8 @@ public class Main {
 						System.out.println("Type checking is WRONG!");
 					else {
 						System.out.println("CheckSemantic ok!");
-						System.out.println("Type checking ok!");
-						System.out.println("Symbol Table: \n");
-						System.out.println(ST.toPrint());
+						System.out.println("Type checking ok!\n");
+						System.out.println("Symbol Table: \n" + ST.toPrint());
 						codegen = true;
 					}
 				}
@@ -117,13 +118,12 @@ public class Main {
 				// CODE GENERATION  
 				
 					String code=ast.codeGeneration(); 
-					System.out.println(code);
 					BufferedWriter out = new BufferedWriter(new FileWriter("src\\input.txt"+".asm")); 
 					out.write(code);
 					out.close(); 
 					System.out.println("Code generated! Assembling and running generated code.");
 				
-					String input2 = new String(Files.readAllBytes(Paths.get("src\\input.txt.asm")));
+					String input2 = new String(Files.readAllBytes(Paths.get(inputfile + ".asm")));
 					CharStream inputASM = CharStreams.fromString(input2);
 					SVMLexer lexerASM = new SVMLexer(inputASM);
 					CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
