@@ -107,7 +107,7 @@ public class Main {
 						System.out.println("Type checking ok!");
 						System.out.println("Symbol Table: \n");
 						System.out.println(ST.toPrint());
-						codegen = true;
+						//codegen = true;
 					}
 				}
 				

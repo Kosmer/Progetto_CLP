@@ -22,6 +22,7 @@ public class DecNode implements Node {
         	errors.add(new SemanticError("Var id '" + id + "' already declared"));
         else {
         	ST.insert(id, (Type) type, nesting,"") ;
+        	
         }
  
         return errors ;
@@ -38,9 +39,11 @@ public class DecNode implements Node {
 	}
   
 	public String codeGeneration() {
-		return "";
+		return /*"storei T1 1 \n" +
+				"sub SP T1 \n" +
+				"pop \n" ;*/
+				"subi SP 1 \n";		
 	}  
-    
 	public String toPrint(String s) {
 		return "  "+ s + "DecVar:" + id + type.toPrint(" ") + "\n"; 
 	}

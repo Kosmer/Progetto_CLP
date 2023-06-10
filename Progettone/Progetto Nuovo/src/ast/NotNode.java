@@ -16,7 +16,12 @@ public class NotNode implements Node {
   
 
 	public ArrayList<SemanticError> checkSemantics(SymbolTable ST, int _nesting) {
-		return new ArrayList<SemanticError>();
+		
+		ArrayList<SemanticError> errors = new ArrayList<SemanticError>();
+		  
+		  
+		errors.addAll(ctx.checkSemantics(ST, _nesting));
+		return errors;
 	}
 	  
 	public Type typeCheck() {

@@ -42,7 +42,7 @@ public class EqualNode implements Node {
 				"pushr A0 \n" +
 				right.codeGeneration()+
 				"popr T1 \n" +
-				"beq A0 T1 "+ ltrue +"\n"+
+				"beq T1 A0 "+ ltrue +"\n"+
 				"storei A0 0\n"+
 				"b " + lend + "\n" +
 				ltrue + ":\n"+

@@ -1,12 +1,7 @@
-int a;
-int b(int n1) {
-    int c;
-    int a;
-    int d(int n2) {
-        c * n2
-    }
-    a = 3;
-    d(n1) + a
+int x ;
+void f(int n){ 
+	if (n == 0) { n = 0 ; }       // n e` gia` uguale a 0; equivale a fare skip
+	else { x = x * n ; f(n-1) ; }	
 }
-a = 10;
-b(a) + a
+x = 1 ;
+f(10) 

@@ -43,6 +43,9 @@ public class FunNode implements Node {
 			ST.add(HM);
 			//ST.addCopyEnv();
 			
+			
+			System.out.println("Sto dichiarando " + id +", Tabella: " + ST.toPrint());
+			
 			for (ParNode arg : parlist){
     	  			partypes.add(arg.getType());
     	  			if (ST.top_lookup(arg.getId()))
@@ -56,7 +59,6 @@ public class FunNode implements Node {
 			type = new ArrowType(partypes, returntype) ;
 			
 			ST.increaseoffset() ; // aumentiamo di 1 l'offset per far posto al return value
-			
 			
 			
 			for (Node dec : declist)
@@ -73,7 +75,7 @@ public class FunNode implements Node {
 			for (Node stm : stmlist)
 				errors.addAll(stm.checkSemantics(ST, nesting+1));
 			
-			
+			System.out.println("TABELLA A META" + ST.toPrint());
 
 			if(exp!=null)
 				errors.addAll(exp.checkSemantics(ST, nesting+1));
@@ -157,8 +159,7 @@ public class FunNode implements Node {
 	    			+ stmlCode
 	    			+ expCode
 	    			//+"FINE CODICE DENTRO FUNNODE\n"
-	    			+ "addi SP " + 	stmlist.size() + "\n"
-	    			
+	    			+ "addi SP " + 	declist.size() + "\n"
 	    			+ "popr RA \n"
 	    			+ "addi SP " + 	parlist.size() + "\n"
 	    			+ "pop \n"
@@ -173,7 +174,10 @@ public class FunNode implements Node {
 	    System.out.println("LABELLA: "+flabel);
 	    System.out.println("CODICE: "+SimpLanPluslib.getCode());
 		return 	//"FUNCTIONDECLARATION\n"+
-				//"push " + prelabel +"\n" +
+				/*"storei T1 1 \n" +
+				"sub SP T1 \n" +
+				"popr SP \n" +*/
+				//"subi SP 1 \n"+
 				"push " + flabel +"\n";	
   }
   

@@ -195,25 +195,25 @@ public class ExecuteVM {
                 	} else ip = ip+2 ;
              	  	break;
               case SVMParser.BRANCHGREATEQ :
-          			if (read(bytecode.getArg1()) <= read(bytecode.getArg2())){
+          			if (read(bytecode.getArg1()) >= read(bytecode.getArg2())){
           				address = ip+1;
           				ip = code[address].getCode() ;
           			} else ip = ip+2 ;
           			break;
               case SVMParser.BRANCHGREATER :
-        			if (read(bytecode.getArg1()) < read(bytecode.getArg2())){
+        			if (read(bytecode.getArg1()) > read(bytecode.getArg2())){
         				address = ip+1;
         				ip = code[address].getCode() ;
         			} else ip = ip+2 ;
         			break;
               case SVMParser.BRANCHLESSEQ :
-        			if (read(bytecode.getArg1()) >= read(bytecode.getArg2())){
+        			if (read(bytecode.getArg1()) <= read(bytecode.getArg2())){
         				address = ip+1;
         				ip = code[address].getCode() ;
         			} else ip = ip+2 ;
         			break;
              case SVMParser.BRANCHLESS :
-      			if (read(bytecode.getArg1()) > read(bytecode.getArg2())){
+      			if (read(bytecode.getArg1()) < read(bytecode.getArg2())){
       				address = ip+1;
       				ip = code[address].getCode() ;
       			} else ip = ip+2 ;

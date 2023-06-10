@@ -31,7 +31,7 @@ public class IfExpNode implements Node {
 
 	  System.out.println("COPIA SYMB" + S1.toPrint());
 	  
-	  System.out.println(ST.toPrint());
+	  
 	  errors.addAll(guard.checkSemantics(ST, _nesting));
 	  errors.addAll(thenbranch.checkSemantics(S1, _nesting));
 	  errors.addAll(elsebranch.checkSemantics(S2, _nesting));

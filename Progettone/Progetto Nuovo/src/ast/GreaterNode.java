@@ -40,7 +40,7 @@ public class GreaterNode implements Node {
 				"pushr A0 \n" +
 				right.codeGeneration()+
 				"popr T1 \n" +
-				"bg A0 T1 "+ ltrue +"\n"+
+				"bg T1 A0 "+ ltrue +"\n"+
 				"storei A0 0\n"+
 				"b " + lend + "\n" +
 				ltrue + ":\n"+
