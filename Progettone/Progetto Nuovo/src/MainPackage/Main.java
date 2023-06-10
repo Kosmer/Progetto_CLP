@@ -43,7 +43,7 @@ public class Main {
 		}
 		
 		String inputfile = "src\\InputOutput\\input.txt";
-		System.out.println(args[0]);
+		
 		String outputfile = "src\\InputOutput\\syntax_errors.txt";
 		
 		Boolean checkType = false;

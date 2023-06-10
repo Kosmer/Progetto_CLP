@@ -1,11 +1,6 @@
-/MainPackage/
 /ast/
 /evaluator/
-/input.txt
-/lexical_errors.txt
 /parser/
 /semanticAnalysis/
-/input.txt.asm
-/syntax_errors.txt
-/Esercizi.txt
+/MainPackage/
 /InputOutput/

@@ -233,6 +233,18 @@ public class SimpLanPlusParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class IdDecContext extends DecContext {
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
+		}
+		public TerminalNode ID() { return getToken(SimpLanPlusParser.ID, 0); }
+		public IdDecContext(DecContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitIdDec(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class FunDecContext extends DecContext {
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
@@ -251,18 +263,6 @@ public class SimpLanPlusParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitFunDec(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class IdDecContext extends DecContext {
-		public TypeContext type() {
-			return getRuleContext(TypeContext.class,0);
-		}
-		public TerminalNode ID() { return getToken(SimpLanPlusParser.ID, 0); }
-		public IdDecContext(DecContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitIdDec(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -807,6 +807,17 @@ public class SimpLanPlusParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class BaseExpContext extends ExpContext {
+		public ExpContext exp() {
+			return getRuleContext(ExpContext.class,0);
+		}
+		public BaseExpContext(ExpContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitBaseExp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class MuldivExpContext extends ExpContext {
 		public ExpContext left;
 		public Token mul;
@@ -878,17 +889,6 @@ public class SimpLanPlusParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitTrueExp(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class BaseExpContext extends ExpContext {
-		public ExpContext exp() {
-			return getRuleContext(ExpContext.class,0);
-		}
-		public BaseExpContext(ExpContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof SimpLanPlusVisitor ) return ((SimpLanPlusVisitor<? extends T>)visitor).visitBaseExp(this);
 			else return visitor.visitChildren(this);
 		}
 	}

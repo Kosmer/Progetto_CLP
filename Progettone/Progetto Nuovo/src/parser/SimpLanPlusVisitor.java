@@ -25,7 +25,7 @@ public interface SimpLanPlusVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDecstmExp(SimpLanPlusParser.DecstmExpContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code idInit}
+	 * Visit a parse tree produced by the {@code idDec}
 	 * labeled alternative in {@link SimpLanPlusParser#dec}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -90,6 +90,13 @@ public interface SimpLanPlusVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBlockseqstmexp(SimpLanPlusParser.BlockseqstmexpContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code baseExp}
+	 * labeled alternative in {@link SimpLanPlusParser#exp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBaseExp(SimpLanPlusParser.BaseExpContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code muldivExp}
 	 * labeled alternative in {@link SimpLanPlusParser#exp}.
 	 * @param ctx the parse tree
@@ -124,13 +131,6 @@ public interface SimpLanPlusVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTrueExp(SimpLanPlusParser.TrueExpContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code parExp}
-	 * labeled alternative in {@link SimpLanPlusParser#exp}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBaseExp(SimpLanPlusParser.BaseExpContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code andorExp}
 	 * labeled alternative in {@link SimpLanPlusParser#exp}.

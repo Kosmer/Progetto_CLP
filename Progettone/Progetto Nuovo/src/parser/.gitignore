@@ -6,3 +6,11 @@
 /SVMLexer.tokens
 /SVMParser.java
 /SVMVisitor.java
+/SimpLanPlus.interp
+/SimpLanPlus.tokens
+/SimpLanPlusBaseVisitor.java
+/SimpLanPlusLexer.interp
+/SimpLanPlusLexer.java
+/SimpLanPlusLexer.tokens
+/SimpLanPlusParser.java
+/SimpLanPlusVisitor.java
