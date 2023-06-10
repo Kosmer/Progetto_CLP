@@ -1,13 +1,6 @@
-int a;
-int b(int n) {
-    int c;
-    int a;
-    int d(int n) {
-        c = 1;
-        c * n
-    }
-    a = 3;
-    d(n) + a
-}
-a = 10;
-b(a) + a
+int a; 
+     void h(int n){ 
+  	  int x ; int y ;
+          if (n==0){ x = n+1 ;} else { h(n-1) ; y = x ;} 
+     }
+     h(5) ;

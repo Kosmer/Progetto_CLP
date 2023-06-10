@@ -34,7 +34,7 @@ public class DecNode implements Node {
 			return new ErrorType() ;
 		}
 		
-		return new VoidType();
+		return null;
 		    
 	}
   

@@ -45,7 +45,7 @@ public class Main {
 		Token token = lexer.nextToken();
 		List<Token> lexerErrors = new ArrayList<>();
 		Boolean checkType = true;
-		Boolean codegen = true;
+		Boolean codegen = false;
 		
 		while (token.getType() != SimpLanPlusLexer.EOF) {
 			if(token.getType() == SimpLanPlusLexer.ERR)
@@ -108,7 +108,7 @@ public class Main {
 						System.out.println("CheckSemantic ok!");
 						System.out.println("Type checking ok!\n");
 						System.out.println("Symbol Table: \n" + ST.toPrint());
-						codegen = true;
+						//codegen = true;
 					}
 				}
 				

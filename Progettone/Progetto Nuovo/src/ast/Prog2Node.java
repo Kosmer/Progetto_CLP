@@ -49,10 +49,7 @@ public class Prog2Node implements Node {
 			}
 					
 		if (exp!=null)
-			if (exp.typeCheck() instanceof ErrorType) {
-				
-				return new ErrorType();
-			}
+			return exp.typeCheck();
 				
 		return new VoidType();
 	}  
