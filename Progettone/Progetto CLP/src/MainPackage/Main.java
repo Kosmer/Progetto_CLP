@@ -28,10 +28,13 @@ import semanticAnalysis.SemanticError;
 
 //							COME AVVIARE
 //		Aprire un terminale dentro la cartella 'Progetto' e digitare il comando:
-//			java -jar .\SimpLanPlus.jar 1 1
-//		i due interi servono rispettivamente per attivare (1) o disattivare (0) le fasi di TypeChecking e quella di Codegen.
+//			java -jar .\SimpLanPlus.jar
+//		E' anche possibile ovviamente avviare direttamente da Eclipse.	
+//		In più, è possibile personalizzare l'avvio decidendo di disattivare la fase di TypeChecking e quella di Codegen con il seguente comando
+//			java -jar .\SimpLanPlus.jar 0 1
+//		i due interi servono per disattivare (0) o attivare (1) rispettivamente le fasi di TypeChecking e quella di Codegen.
 //		Questa scelta è stata presa per avviare correttamente gli esempi dell'esercizio 4, che altrimenti si sarebbero bloccati
-//		al typechecking senza eseguire la codegen.
+//		al Typechecking a causa di errori di inizializzazione trovati nel codice, senza quindi eseguire la Codegen.
 
 public class Main {
 
@@ -48,15 +51,16 @@ public class Main {
 		String outputfile = "./src/InputOutput/syntax_errors.txt";
 		
 		Boolean checkType = true;
-		Boolean codegen = true;
+		Boolean codegen = false;
 		
 				if (custom) {
 			if(args[0].equals("0")) {
 				checkType = false;
 			}
 				
-			if(args[1].equals("0"))
-				codegen = false;
+		
+			if(args[1].equals("1"))
+				codegen = true;
 		}
 		
 		
@@ -133,6 +137,8 @@ public class Main {
 						System.out.println("CheckSemantic ok!");
 						System.out.println("Type checking ok!\n");
 						System.out.println("Symbol Table: \n" + ST.toPrint());
+						if(custom==false)
+							codegen= true;
 					}
 				}
 				
