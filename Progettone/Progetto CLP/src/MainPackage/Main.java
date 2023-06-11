@@ -37,24 +37,28 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		
-		if(args.length!=2) {
-			System.out.println("The parameters must be 2.");
-			return;
+		Boolean custom = false;
+		
+		if(args.length==2) {
+			custom = true;
 		}
 		
 		String inputfile = "./src/InputOutput/input.txt";
 		
 		String outputfile = "./src/InputOutput/syntax_errors.txt";
 		
-		Boolean checkType = false;
-		Boolean codegen = false;
-				
-		if(args[0].equals("1")) {
-			checkType = true;
+		Boolean checkType = true;
+		Boolean codegen = true;
+		
+				if (custom) {
+			if(args[0].equals("0")) {
+				checkType = false;
+			}
+				
+			if(args[1].equals("0"))
+				codegen = false;
 		}
-			
-		if(args[1].equals("1"))
-			codegen = true;
+		
 		
 		
 		//es 1
@@ -138,7 +142,7 @@ public class Main {
 				// CODE GENERATION  
 				
 					String code=ast.codeGeneration(); 
-					BufferedWriter out = new BufferedWriter(new FileWriter("src\\input.txt"+".asm")); 
+					BufferedWriter out = new BufferedWriter(new FileWriter(inputfile+".asm")); 
 					out.write(code);
 					out.close(); 
 					System.out.println("Code generated! Assembling and running generated code.");
